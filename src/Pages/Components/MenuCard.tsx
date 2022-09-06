@@ -43,7 +43,9 @@ const MenuCard = (props: Props) => {
           </CardContent>
           <CardActions>
             <Button variant="contained" size="medium">追加</Button>
-            <Button variant="outlined"size="medium">詳細</Button>
+            <a target="_blank" href={props.detail_url}>
+              <Button variant="outlined"size="medium">詳細</Button>
+            </a>
           </CardActions>
         </Card>
       </div>

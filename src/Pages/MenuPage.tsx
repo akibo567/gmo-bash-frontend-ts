@@ -61,6 +61,7 @@ interface IMenuPageProps {
 interface IMenuPageState {
   tab_value: string;
   isLoading: boolean;
+  menu_list: any;
 }
 
 
@@ -70,15 +71,17 @@ export default class MenuPage extends Component<IMenuPageProps, IMenuPageState> 
     super(props);
     this.state = {
       tab_value: '1',
-      isLoading: true
+      isLoading: true,
+      menu_list: []
     };
 
   }
 
   componentDidMount() {
-      axios.get(`https://jsonplaceholder.typicode.com/users`)
+      axios.get(`http://localhost:3004/recipe_return_1`)
       .then(res => {
         this.setState({isLoading: false});
+        this.setState({menu_list: res.data});
         const persons = res.data;
         console.log(res.data);
       }).catch(err => {
@@ -104,11 +107,11 @@ export default class MenuPage extends Component<IMenuPageProps, IMenuPageState> 
           </Box>
           <TabPanel value="1">
           <div style={style_MenuListContainer}>
-                    {dummy_data_2.map((output, index) => {
+                    {this.state.menu_list.map((output: any, index:any) => {
                       return <MenuCard
                         id={output.id}
-                        menu_name={output.menu_name}
-                        detail_url={output.detail_url}
+                        menu_name={output.recipeName}
+                        detail_url={output.recipeUrl}
                       />;
                     })}
                   </div>
