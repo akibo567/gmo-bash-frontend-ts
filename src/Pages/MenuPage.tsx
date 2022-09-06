@@ -21,14 +21,38 @@ const dummy_data_2 =
     id : 15,
     menu_name : "ホルモンパスタ",
     detail_url : "https://www.yahoo.jp/"
+  },
+  {
+    id : 15,
+    menu_name : "ホルモンパスタ",
+    detail_url : "https://www.yahoo.jp/"
+  },
+  {
+    id : 15,
+    menu_name : "ホルモンパスタ",
+    detail_url : "https://www.yahoo.jp/"
+  },
+  {
+    id : 15,
+    menu_name : "ホルモンパスタ",
+    detail_url : "https://www.yahoo.jp/"
+  },
+  {
+    id : 15,
+    menu_name : "ホルモンパスタ",
+    detail_url : "https://www.yahoo.jp/"
+  },
+  {
+    id : 15,
+    menu_name : "ホルモンパスタ",
+    detail_url : "https://www.yahoo.jp/"
   }
 
 ]
 
 const Home = () => {
   return (
-    <>
-      <div>メニュー</div>
+    <div style={style_MenuPage}>
       <Tabs>
         <TabList>
           <Tab>朝</Tab>
@@ -42,22 +66,38 @@ const Home = () => {
         <TabPanel>
           <h2>昼</h2>
         </TabPanel>
-        <TabPanel>
+        <TabPanel style={style_TabPanel}>
           <h2>夜</h2>
-          {dummy_data_2.map((output, index) => {
-            return <MenuCard
-              id={output.id}
-              menu_name={output.menu_name}
-              detail_url={output.detail_url}
-            />;
-          })}
+          <div style={style_MenuListContainer}>
+            {dummy_data_2.map((output, index) => {
+              return <MenuCard
+                id={output.id}
+                menu_name={output.menu_name}
+                detail_url={output.detail_url}
+              />;
+            })}
+          </div>
         </TabPanel>
       </Tabs>
       <NavLink to="/">
           <p>カレンダー</p>
       </NavLink>
-    </>
+    </div>
   )
 }
+
+const style_TabPanel = {
+  background: '#dcdcdc'
+};
+
+const style_MenuListContainer = {
+  display: 'flex'
+};
+
+
+const style_MenuPage = {
+  background: '#dcdcdc'
+};
+
 
 export default Home
