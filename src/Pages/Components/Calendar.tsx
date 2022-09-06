@@ -1,12 +1,10 @@
-import React from 'react'
-
-import FullCalendar from '@fullcalendar/react';
+import FullCalendar, { DateSelectArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
+import interactionPlugin from '@fullcalendar/interaction';
 
 
 const Calendar = () => {
-  let menuList = [];
+  let menuList: any = [];
 
   menuList.push(
     {
@@ -74,6 +72,12 @@ const Calendar = () => {
     },
   )
 
+  const handleDateSelect = (selectionInfo: DateSelectArg) => {
+    const selectDate: string = selectionInfo.startStr;
+    const result = menuList.filter((menu: any) => menu.date === selectDate);
+    console.log(result);
+}
+
   return (
     <>
     <div>
@@ -87,12 +91,8 @@ const Calendar = () => {
       initialView="dayGridMonth" // 初期表示のモードを設定する
       events={menuList}
       contentHeight='auto'
-      dateClick={
-        function(info: DateClickArg) {
-          alert('Clicked on:' + info.dateStr);
-        }
-      }
-      
+      selectable={true}
+      select={handleDateSelect}
     />
     </div>
     </>
