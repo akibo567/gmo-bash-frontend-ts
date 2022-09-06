@@ -2,6 +2,7 @@ import React from 'react'
 
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 
 
 const Calendar = () => {
@@ -29,7 +30,7 @@ const Calendar = () => {
     <>
     <div>
     <FullCalendar
-      plugins={[dayGridPlugin]} // pluginsにdayGridPluginを設定する
+      plugins={[dayGridPlugin, interactionPlugin]} 
       headerToolbar={{
         left: 'prev',
         center: 'title',
@@ -38,6 +39,12 @@ const Calendar = () => {
       initialView="dayGridMonth" // 初期表示のモードを設定する
       events={menuList}
       contentHeight='auto'
+      dateClick={
+        function(info: DateClickArg) {
+          alert('Clicked on:' + info.dateStr);
+        }
+      }
+      
     />
     </div>
     </>
