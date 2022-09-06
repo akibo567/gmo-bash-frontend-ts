@@ -50,7 +50,7 @@ const dummy_data_2 =
 
 ]
 
-const Home = () => {
+const MenuPage = () => {
   return (
     <div style={style_MenuPage}>
       <Tabs>
@@ -86,6 +86,7 @@ const Home = () => {
   )
 }
 
+<<<<<<< HEAD
 const style_TabPanel = {
   background: '#dcdcdc'
 };
@@ -101,3 +102,6 @@ const style_MenuPage = {
 
 
 export default Home
+=======
+export default MenuPage
+>>>>>>> main
