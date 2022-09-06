@@ -37,6 +37,7 @@ const Calendar = () => {
       }}
       initialView="dayGridMonth" // 初期表示のモードを設定する
       events={menuList}
+      contentHeight='auto'
     />
     </div>
     </>
