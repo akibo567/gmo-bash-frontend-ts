@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 
 
 const Calendar = () => {
+  let menuList = [];
   return (
     <>
     <div>Calendar</div>
