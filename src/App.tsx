@@ -10,8 +10,8 @@ function App() {
   return (
     <>
       <div>
-        <Header />
         <BrowserRouter>
+          <Header />
           <Routes>
             <Route path="/" element={<TopPage />} />
             <Route path="/MenuPage" element={<MenuPage />} />
