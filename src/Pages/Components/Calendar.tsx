@@ -27,12 +27,13 @@ const Calendar = () => {
 
   return (
     <>
-    <div>Calendar</div>
     <div>
     <FullCalendar
       plugins={[dayGridPlugin]} // pluginsにdayGridPluginを設定する
       headerToolbar={{
-        right: 'dayGridMonth,dayGridWeek',
+        left: 'prev',
+        center: 'title',
+        right: 'next', 
       }}
       initialView="dayGridMonth" // 初期表示のモードを設定する
       events={menuList}
