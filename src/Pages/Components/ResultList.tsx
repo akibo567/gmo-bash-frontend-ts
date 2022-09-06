@@ -79,7 +79,9 @@ export default function ResultTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography sx={{fontSize: 24, marginTop: 4}}>
+      <Typography
+        fontSize={32}
+        sx={{marginTop: 4}}>
         合計金額  10万円
       </Typography>
     </>
