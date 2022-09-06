@@ -4,11 +4,13 @@ import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
 
 import TopPage from './Pages/TopPage';
 import MenuPage from './Pages/MenuPage';
+import Header from './Pages/Components/Header';
 
 function App() {
   return (
     <>
       <div>
+        <Header />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<TopPage />} />
