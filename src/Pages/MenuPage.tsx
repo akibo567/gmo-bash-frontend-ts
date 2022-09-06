@@ -86,7 +86,6 @@ const MenuPage = () => {
   )
 }
 
-<<<<<<< HEAD
 const style_TabPanel = {
   background: '#dcdcdc'
 };
@@ -101,7 +100,4 @@ const style_MenuPage = {
 };
 
 
-export default Home
-=======
 export default MenuPage
->>>>>>> main
