@@ -13,46 +13,64 @@ const Calendar = () => {
       title: '牛丼',
       date: '2022-09-22',
       color: 'red',
+      money: '100',
+      material: 'ブロッコリー, 白菜'
     },
     {
       title: '卵',
       date: '2022-09-22',
       color: 'black',
+      money: '100',
+      material: 'ブロッコリー, 白菜'
     },
     {
       title: 'シェフの気まぐれサラダ',
       date: '2022-09-22',
       color: 'blue',
+      money: '100',
+      material: 'ブロッコリー, 白菜'
     },
     {
       title: '牛丼',
       date: '2022-09-23',
       color: 'red',
+      money: '100',
+      material: 'ブロッコリー, 白菜'
     },
     {
       title: '卵',
       date: '2022-09-23',
       color: 'black',
+      money: '100',
+      material: 'ブロッコリー, 白菜'
     },
     {
       title: 'シェフの気まぐれサラダ',
       date: '2022-09-23',
       color: 'blue',
+      money: '100',
+      material: 'ブロッコリー, 白菜'
     },
     {
       title: '牛丼',
       date: '2022-09-24',
       color: 'red',
+      money: '100',
+      material: 'ブロッコリー, 白菜'
     },
     {
       title: '卵',
       date: '2022-09-24',
       color: 'black',
+      money: '100',
+      material: 'ブロッコリー, 白菜'
     },
     {
       title: 'シェフの気まぐれサラダ',
       date: '2022-09-24',
       color: 'blue',
+      money: '100',
+      material: 'ブロッコリー, 白菜'
     },
   )
 
