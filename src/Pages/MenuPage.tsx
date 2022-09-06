@@ -3,7 +3,7 @@ import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
 
 import Calendar from './TopPage';
 
-const Home = () => {
+const MenuPage = () => {
   return (
     <>
       <div>Home</div>
@@ -16,4 +16,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default MenuPage

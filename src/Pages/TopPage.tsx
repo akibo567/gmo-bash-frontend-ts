@@ -2,22 +2,14 @@ import React from 'react'
 import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import Calendar from './Components/Calendar';
 
 
-const Calendar = () => {
+const TopPage = () => {
   return (
     <>
     <div>Calendar</div>
-    <div>
-    <FullCalendar
-      plugins={[dayGridPlugin]} // pluginsにdayGridPluginを設定する
-      headerToolbar={{
-        right: 'dayGridMonth,dayGridWeek',
-      }}
-      initialView="dayGridMonth" // 初期表示のモードを設定する
-      events={'https://fullcalendar.io/api/demo-feeds/events.json'}
-    />
-    </div>
+      <Calendar></Calendar>
       <NavLink to="/MenuPage">
         <p>メニュー</p>
       </NavLink>
@@ -25,4 +17,4 @@ const Calendar = () => {
   )
 }
 
-export default Calendar
+export default TopPage
