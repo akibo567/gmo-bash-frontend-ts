@@ -39,8 +39,12 @@ const MenuPage = () => {
   return (
     <div style={style_LoginPage}>
       <>
+      <div>
       <TextField id="filled-basic" label="userID" variant="filled" />
+      </div>
+      <div>
       <TextField id="filled-basic" label="password" variant="filled" />
+      </div>
       </>
     </div>
   );
