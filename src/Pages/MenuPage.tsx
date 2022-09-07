@@ -16,7 +16,14 @@ import TabPanel from '@mui/lab/TabPanel';
 import MenuCard from './Components/MenuCard';
 import {Recipe} from '../Types/Recipe';
 import {RootState} from '../store';
-import {API_ENDPOINT} from '../Setting';
+import {API_ENDPOINT,
+   BREAKFAST_TIME, 
+   LUNCH_TIME, 
+   DINNER_TIME,
+   BREAKFAST_MENU_TYPES,
+   LUNCH_MENU_TYPES,
+   DINNER_MENU_TYPES,
+} from '../Setting';
 
 
 
@@ -25,7 +32,10 @@ const MenuPage = () => {
 
   const [tab_value, setTab_value] = useState<string>("1");
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [menu_list, setMenu_list] = useState<Recipe[]>([]);
+  const [menu_list_breakfast, setMenuListBreakfast] = useState<Recipe[]>([]);
+  const [menu_list_lunch, setMenuListLunch] = useState<Recipe[]>([]);
+  const [menu_list_dinner, setMenuListDinner] = useState<Recipe[]>([]);
+
 
   const tabHandleChange = (event: React.SyntheticEvent, newValue: string) => {
     setTab_value(newValue);
@@ -39,15 +49,23 @@ const MenuPage = () => {
   const select_day_start = useSelector((state: RootState) => state.selected_menu_info.selected_day_start);
   
   useEffect(() => {
-    axios.get(API_ENDPOINT + `recipe?recipeCategory=47`)
-    //axios.get("https://v163-44-255-248.oox1.static.cnode.io/api/dev/recipe?recipeCategory=14-122")
-    .then(res => {
+    axios.post(API_ENDPOINT + "recipe/list", {
+        "breakfast": BREAKFAST_MENU_TYPES,
+        "lunch": LUNCH_MENU_TYPES,
+        "dinner": DINNER_MENU_TYPES,
+    })
+    .then((res) => {
+      setMenuListBreakfast(res.data[0]);
+      setMenuListLunch(res.data[1]);
+      setMenuListDinner(res.data[2]);
+      console.log(res.data);
+
       setIsLoading(false);
-      setMenu_list(res.data);
     }).catch(err => {
       alert('通信エラー:'+err);
     });
   }, []);
+
   return (
     <div style={style_MenuPage}>
       {isLoading?
@@ -57,34 +75,63 @@ const MenuPage = () => {
       </Box>
       :
       //ロード完了時に表示する画面
-      <TabContext value={tab_value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={tabHandleChange} aria-label="時間帯を選択">
-            <Tab label="朝" value="1" />
-            <Tab label="昼" value="2" />
-            <Tab label="夜" value="3" />
-          </TabList>
-        </Box>
-        <TabPanel value="1">
-        <div style={style_MenuListContainer}>
-                  {menu_list.map((output: Recipe, index: number) => {
-                    return <MenuCard
-                      user_id={1}
-                      recipe_data={output}
-                      recipe_id={output.recipeId}
-                      menu_name={output.recipeName}
-                      detail_url={output.recipeUrl}
-                      selected_date={select_day_start}
-                      setIsLoadingEvent={setIsLoading}
-                      navigateChangeEvent={navigateChange}
-                    />;
-                  })}
-                </div>
-        </TabPanel>
-        <TabPanel value="2">
-          Item Two</TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
-                </TabContext>
+          <TabContext value={tab_value}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <TabList onChange={tabHandleChange} aria-label="時間帯を選択">
+                <Tab label="朝" value="1" />
+                <Tab label="昼" value="2" />
+                <Tab label="夜" value="3" />
+              </TabList>
+            </Box>
+                  <TabPanel value="1">
+                  <div style={style_MenuListContainer}>
+                            {menu_list_breakfast?.map((output: Recipe, index: number) => {
+                              return <MenuCard
+                                user_id={1}
+                                recipe_id={output.recipeId}
+                                menu_name={output.recipeName}
+                                img_url={output.recipeImage}
+                                detail_url={output.recipeUrl}
+                                selected_date={select_day_start+" "+BREAKFAST_TIME}
+                                setIsLoadingEvent={setIsLoading}
+                                navigateChangeEvent={navigateChange}
+                              />;
+                            })}
+                          </div>
+                  </TabPanel>
+                  <TabPanel value="2">
+                  <div style={style_MenuListContainer}>
+                            {menu_list_lunch?.map((output: Recipe, index: number) => {
+                              return <MenuCard
+                                user_id={1}
+                                recipe_id={output.recipeId}
+                                menu_name={output.recipeName}
+                                detail_url={output.recipeUrl}
+                                img_url={output.recipeImage}
+                                selected_date={select_day_start+" "+LUNCH_TIME}
+                                setIsLoadingEvent={setIsLoading}
+                                navigateChangeEvent={navigateChange}
+                              />;
+                            })}
+                          </div>
+                    </TabPanel>
+                  <TabPanel value="3">
+                  <div style={style_MenuListContainer}>
+                            {menu_list_dinner?.map((output: Recipe, index: number) => {
+                              return <MenuCard
+                                user_id={1}
+                                recipe_id={output.recipeId}
+                                menu_name={output.recipeName}
+                                detail_url={output.recipeUrl}
+                                img_url={output.recipeImage}
+                                selected_date={select_day_start+" "+DINNER_TIME}
+                                setIsLoadingEvent={setIsLoading}
+                                navigateChangeEvent={navigateChange}
+                              />;
+                            })}
+                          </div>
+                  </TabPanel>
+          </TabContext>
         }
     </div>
   );

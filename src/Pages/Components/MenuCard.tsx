@@ -14,10 +14,10 @@ import {Recipe} from '../../Types/Recipe';
 
 type Props = {
   user_id: number,
-  recipe_data: Recipe,
   recipe_id: number,
   menu_name: string,
   detail_url: string,
+  img_url: string,
   selected_date: string,
   setIsLoadingEvent: any,
   navigateChangeEvent: any,
@@ -57,7 +57,7 @@ const MenuCard = (props: Props) => {
           <CardMedia
             component="img"
             height="140"
-            image="test_food_picture.jpg"
+            image={props.img_url}
             alt={props.menu_name}
           />
           <CardContent>
