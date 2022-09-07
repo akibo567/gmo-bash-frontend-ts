@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -8,21 +9,36 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 type Props = {
-  id: number,
+  user_id: number,
+  recipe_id: number,
   menu_name: string,
-  detail_url: string
+  detail_url: string,
+  selected_date: string,
+  setIsLoadingEvent: any,
 }
 
-function selectDayMenu(e: any) {
-  e.preventDefault();
-  console.log('You clicked submit.');
-  alert("aadal;dl");
+const selectDayMenu = (props: Props) => {
+  props.setIsLoadingEvent(true);
+  axios
+  .post("http://localhost:3004/success", {
+      "userId": props.user_id,
+      "date": props.selected_date,
+      "recipeId": props.recipe_id,
+  })
+  .then((res) => {
+    if(res.data.message == "success"){
+      alert("成功");
+    };
+  }).catch(err => {
+    alert('通信エラー:'+err);
+    props.setIsLoadingEvent(false);
+  });
 }
 
-function selectDetail(e: any) {
+/*function selectDetail(e: any) {
   e.preventDefault();
   console.log('You clicked submit.');
-}
+}*/
 
 const MenuCard = (props: Props) => {
 
@@ -42,7 +58,11 @@ const MenuCard = (props: Props) => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="contained" size="medium">追加</Button>
+            <Button variant="contained" size="medium" 
+              onClick={() => selectDayMenu(props)}>
+                追加
+            </Button>
+
             <a target="_blank" href={props.detail_url}>
               <Button variant="outlined"size="medium">詳細</Button>
             </a>
@@ -55,22 +75,7 @@ const MenuCard = (props: Props) => {
 }
 
 
-  /*<div style={style_Menucard}>
-  <div>
-    <img src="test_food_picture.jpg" alt="picture" style={style_Menu_Image}/>
-  </div>
-    <p style={style_Menu_Name}>{props.menu_name}</p>
-    <div style={style_Buttons_Container}>
-      <button onClick={selectDayMenu}>
-        選択
-      </button>
-      <a target="_blank" href={props.detail_url}>
-      <button style={style_Detail_Button}>
-        詳細
-      </button>
-      </a>
-    </div>
-</div>*/
+
 
 const style_Menucard = {
   background: '#ffffff',
