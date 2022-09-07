@@ -18,7 +18,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
-import { DateRecipes } from '../../Types/DateRecipes';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,7 +39,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const url = "http://v163-44-255-248.oox1.static.cnode.io/api/dev";
+const url = "https://v163-44-255-248.oox1.static.cnode.io/api/dev";
 
 const options: AxiosRequestConfig = {
   url: `${url}/user/recipe`,
@@ -54,14 +53,15 @@ const options: AxiosRequestConfig = {
 };
 
 const Calendar = () => {
-  const [userEventList, setUserEventList] = useState<DateRecipes>();
+  const [userEventList, setUserEventList] = useState<EventList>();
   const [status, setStatus] = useState<number | null>(null);
 
   //API通信を行う箇所
   useEffect(() => {
     axios(options)
-      .then((res: AxiosResponse<DateRecipes>) => {
+      .then((res: AxiosResponse<EventList>) => {
         const { data, status } = res;
+        console.log(data);
         setUserEventList(data);
         setStatus(status);
       })
@@ -70,8 +70,6 @@ const Calendar = () => {
         console.log(e.message);
       });
   }, []);
-
-  // console.log(userEventList);
 
   // ダミーデータ
   const dummyEventList: EventList = {
