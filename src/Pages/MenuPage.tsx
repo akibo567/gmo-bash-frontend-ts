@@ -1,105 +1,94 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 import CircularProgress from '@mui/material/CircularProgress';
-
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
+
 import MenuCard from './Components/MenuCard';
-
 import {Recipe} from '../Types/Recipe';
-
-interface IMenuPageProps {
-  user_id?: number;
-  selected_date?: string; 
-}
-interface IMenuPageState {
-  tab_value: string;
-  isLoading: boolean;
-  menu_list: Recipe[];
-}
+import {RootState} from '../store';
+import {API_ENDPOINT} from '../Setting';
 
 
 
-export default class MenuPage extends Component<IMenuPageProps, IMenuPageState> {
-  constructor(props:IMenuPageProps) {
-    super(props);
-    this.state = {
-      tab_value: '1',
-      isLoading: true,
-      menu_list: []
-    };
+const MenuPage = () => {
+  const navigate = useNavigate();
 
-  }
+  const [tab_value, setTab_value] = useState<string>("1");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [menu_list, setMenu_list] = useState<Recipe[]>([]);
 
-  componentDidMount() {
-      axios.get(`http://localhost:3004/recipe_return_1`)
-      .then(res => {
-        this.setState({isLoading: false});
-        this.setState({menu_list: res.data});
-        const persons = res.data;
-        console.log(res.data);
-      }).catch(err => {
-        alert('通信エラー:'+err);
-      });
-  }
-
-  tabHandleChange = (event: React.SyntheticEvent, newValue: string) => {
-    this.setState({tab_value: newValue});
+  const tabHandleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setTab_value(newValue);
   };
 
-  setIsLoading = (newValue: boolean) => {
-    this.setState({isLoading: newValue});
-  }
+  const navigateChange = (event: React.SyntheticEvent, newValue: string) => {
+    //alert('メニューを登録しました。');
+    navigate('/');
+  };
 
-  render() {
-    return (
-      <div style={style_MenuPage}>
-        {this.state.isLoading?
-        //ロード中に表示する画面
-        <Box sx={{ display: 'flex' }}>
-          <CircularProgress />
-        </Box>
-        :
-        //ロード完了時に表示する画面
-        <TabContext value={this.state.tab_value}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <TabList onChange={this.tabHandleChange} aria-label="時間帯を選択">
-              <Tab label="朝" value="1" />
-              <Tab label="昼" value="2" />
-              <Tab label="夜" value="3" />
-            </TabList>
-          </Box>
-          <TabPanel value="1">
-          <div style={style_MenuListContainer}>
-                    {this.state.menu_list.map((output: Recipe, index: number) => {
-                      return <MenuCard
-                        user_id={11}
-                        recipe_id={output.recipeId}
-                        menu_name={output.recipeName}
-                        detail_url={output.recipeUrl}
-                        selected_date="1999-09-19"
-                        setIsLoadingEvent={this.setIsLoading}
-                      />;
-                    })}
-                  </div>
-          </TabPanel>
-          <TabPanel value="2">
-            Item Two</TabPanel>
-          <TabPanel value="3">Item Three</TabPanel>
-                  </TabContext>
-          }
-      </div>
-    );
-    
-  }
+  const select_day_start = useSelector((state: RootState) => state.selected_menu_info.selected_day_start);
   
- }
+  useEffect(() => {
+    axios.get(API_ENDPOINT + `recipe?recipeCategory=47`)
+    //axios.get("https://v163-44-255-248.oox1.static.cnode.io/api/dev/recipe?recipeCategory=14-122")
+    .then(res => {
+      setIsLoading(false);
+      setMenu_list(res.data);
+    }).catch(err => {
+      alert('通信エラー:'+err);
+    });
+  }, []);
+  return (
+    <div style={style_MenuPage}>
+      {isLoading?
+      //ロード中に表示する画面
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+      :
+      //ロード完了時に表示する画面
+      <TabContext value={tab_value}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={tabHandleChange} aria-label="時間帯を選択">
+            <Tab label="朝" value="1" />
+            <Tab label="昼" value="2" />
+            <Tab label="夜" value="3" />
+          </TabList>
+        </Box>
+        <TabPanel value="1">
+        <div style={style_MenuListContainer}>
+                  {menu_list.map((output: Recipe, index: number) => {
+                    return <MenuCard
+                      user_id={1}
+                      recipe_data={output}
+                      recipe_id={output.recipeId}
+                      menu_name={output.recipeName}
+                      detail_url={output.recipeUrl}
+                      selected_date={select_day_start}
+                      setIsLoadingEvent={setIsLoading}
+                      navigateChangeEvent={navigateChange}
+                    />;
+                  })}
+                </div>
+        </TabPanel>
+        <TabPanel value="2">
+          Item Two</TabPanel>
+        <TabPanel value="3">Item Three</TabPanel>
+                </TabContext>
+        }
+    </div>
+  );
+}
 
 const style_TabPanel = {
   background: '#dcdcdc'
@@ -118,3 +107,4 @@ const style_MenuPage = {
   background: '#dcdcdc'
 };
 
+export default MenuPage
