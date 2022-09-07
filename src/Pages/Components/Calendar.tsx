@@ -50,7 +50,7 @@ const Calendar = () => {
 
   const [userEventList, setUserEventList] = useState<Event[]>([] as Event[]);
   const [materialList, setMaterialList] = useState([] as string[]);
-  const [sumRecipeCost, setSumRecipeCost] = useState(0 as number);
+  let [sumRecipeCost, setSumRecipeCost] = useState(0 as number);
 
   const is_user_login = (user_id > 0);
 
@@ -111,6 +111,7 @@ const Calendar = () => {
     dateList.map((date: string) => {
       const eventList = userEventList.filter((event: Event) => event.date === date);
       eventList.map((event) => {
+        sumRecipeCost = sumRecipeCost + FunctionStringToInt(event.recipe.recipeCost);
         setSumRecipeCost(sumRecipeCost + FunctionStringToInt(event.recipe.recipeCost));
         const recipeMaterials: string[] = event.recipe.recipeMaterials;
         recipeMaterials.map((material) => {
