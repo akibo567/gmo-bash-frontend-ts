@@ -19,6 +19,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
+import { API_ENDPOINT } from '../../Setting';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,10 +41,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const url = "https://v163-44-255-248.oox1.static.cnode.io/api/dev";
-
 const options: AxiosRequestConfig = {
-  url: `${url}/user/recipe`,
+  url: `${API_ENDPOINT}/user/recipe`,
   method: "GET",
   withCredentials: false,
   params: {
