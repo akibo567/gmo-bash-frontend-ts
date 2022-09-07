@@ -1,10 +1,40 @@
 import FullCalendar, { DateSelectArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+
 import { EventList } from '../../Types/EventList';
 import { Event } from '../../Types/Event';
-import { Button } from '@mui/material';
 
+import { Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Typography } from '@mui/material';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 const Calendar = () => {
   const eventList: EventList = {
@@ -87,9 +117,10 @@ const Calendar = () => {
     ]
   };
 
-  const materialList: string[] = [];
+  let materialList: string[] = [];
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
+    materialList = [];
     const selectDate: string = selectionInfo.startStr;
     const result = eventList.result.filter((event: Event) => event.date === selectDate);
     result.map((event) => {
@@ -142,6 +173,27 @@ const Calendar = () => {
         }}>
         材料を表示
       </Button>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700, marginTop: 10}} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align='center'>食材一覧</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {materialList.map((material) => (
+              <StyledTableRow key={material}>
+                <StyledTableCell component="th" scope="row" align='center'>{material}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Typography
+        fontSize={32}
+        sx={{marginTop: 4}}>
+        合計金額  10万円
+      </Typography>
     </>
   )
 }
