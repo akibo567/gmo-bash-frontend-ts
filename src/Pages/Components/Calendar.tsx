@@ -122,21 +122,30 @@ const Calendar = () => {
 
   const [materialList, setMaterialList] = useState([] as string[]);
 
-
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
     setMaterialList([]);
 
-    const selectDate: string = selectionInfo.startStr;
+    const startDate = new Date(selectionInfo.startStr);
+    const endDate = new Date(selectionInfo.endStr);
+    const dateList = [];
+    
+    for(let date = startDate; date < endDate; date.setDate(date.getDate()+1)) {
+      dateList.push(formatDate(date));
+    }
+
     const materials: string[] = [];
-    const eventList = dummyEventList.result.filter((event: Event) => event.date === selectDate);
-    eventList.map((event) => {
-      const recipeMaterials: string[] = event.recipe.recipeMaterials;
-      recipeMaterials.map((material) => {
-        if(!materials.includes(material)) {
-          materials.push(material);
-        }
+    dateList.map((date: string) => {
+      const eventList = dummyEventList.result.filter((event: Event) => event.date == date);
+      eventList.map((event) => {
+        const recipeMaterials: string[] = event.recipe.recipeMaterials;
+        recipeMaterials.map((material) => {
+          if(!materials.includes(material)) {
+            materials.push(material);
+          }
+        });
       });
     });
+    // console.log(materials);
     setMaterialList(materials);
   }
 
@@ -149,6 +158,15 @@ const Calendar = () => {
       ))
     )
   }
+
+  // 日付をYYYY-MM-DDの書式で返すメソッド
+  const formatDate = (date: Date) => {
+    const year = date.getFullYear();
+    const month = ('00' + (date.getMonth()+1)).slice(-2);
+    const day = ('00' + date.getDate()).slice(-2);
+    return (`${year}-${month}-${day}`);
+  }
+  
 
   return (
     <>
