@@ -13,15 +13,17 @@ type Props = {
   recipe_id: number,
   menu_name: string,
   detail_url: string,
-  current_date: string,
+  selected_date: string,
+  setIsLoadingEvent: any,
 }
 
-const selectDayMenu = (userID : number,selectedDate : string,recipeId : number) => {
+const selectDayMenu = (props: Props) => {
+  props.setIsLoadingEvent(true);
   axios
   .post("http://localhost:3004/success", {
-      "userId": userID,
-      "date": selectedDate,
-      "recipeId": recipeId,
+      "userId": props.user_id,
+      "date": props.selected_date,
+      "recipeId": props.recipe_id,
   })
   .then((res) => {
     if(res.data.message == "success"){
@@ -29,6 +31,7 @@ const selectDayMenu = (userID : number,selectedDate : string,recipeId : number) 
     };
   }).catch(err => {
     alert('通信エラー:'+err);
+    props.setIsLoadingEvent(false);
   });
 }
 
@@ -56,7 +59,7 @@ const MenuCard = (props: Props) => {
           </CardContent>
           <CardActions>
             <Button variant="contained" size="medium" 
-              onClick={() => selectDayMenu(props.user_id ,props.current_date ,props.recipe_id)}>
+              onClick={() => selectDayMenu(props)}>
                 追加
             </Button>
 

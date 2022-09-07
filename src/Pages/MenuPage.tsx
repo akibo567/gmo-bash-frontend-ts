@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
+import CircularProgress from '@mui/material/CircularProgress';
+
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -51,10 +53,20 @@ export default class MenuPage extends Component<IMenuPageProps, IMenuPageState> 
     this.setState({tab_value: newValue});
   };
 
+  setIsLoading = (newValue: boolean) => {
+    this.setState({isLoading: newValue});
+  }
+
   render() {
     return (
       <div style={style_MenuPage}>
-        {this.state.isLoading?'ロード中':'ロード完了'}
+        {this.state.isLoading?
+        //ロード中に表示する画面
+        <Box sx={{ display: 'flex' }}>
+          <CircularProgress />
+        </Box>
+        :
+        //ロード完了時に表示する画面
         <TabContext value={this.state.tab_value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={this.tabHandleChange} aria-label="時間帯を選択">
@@ -71,7 +83,8 @@ export default class MenuPage extends Component<IMenuPageProps, IMenuPageState> 
                         recipe_id={output.recipeId}
                         menu_name={output.recipeName}
                         detail_url={output.recipeUrl}
-                        current_date="1999-09-19"
+                        selected_date="1999-09-19"
+                        setIsLoadingEvent={this.setIsLoading}
                       />;
                     })}
                   </div>
@@ -80,10 +93,7 @@ export default class MenuPage extends Component<IMenuPageProps, IMenuPageState> 
             Item Two</TabPanel>
           <TabPanel value="3">Item Three</TabPanel>
                   </TabContext>
-  
-        <NavLink to="/">
-            <p>カレンダー</p>
-        </NavLink>
+          }
       </div>
     );
     
