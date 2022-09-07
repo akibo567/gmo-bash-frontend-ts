@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 
 import FullCalendar, { DateSelectArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -17,6 +18,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
+import { DateRecipes } from '../../Types/DateRecipes';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,7 +40,39 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+const url = "http://v163-44-255-248.oox1.static.cnode.io/api/dev";
+
+const options: AxiosRequestConfig = {
+  url: `${url}/user/recipe`,
+  method: "GET",
+  withCredentials: false,
+  params: {
+    userId: 1,
+    start: "2022-09-07",
+    end: "2022-09-10",
+  }
+};
+
 const Calendar = () => {
+  const [userEventList, setUserEventList] = useState<DateRecipes>();
+  const [status, setStatus] = useState<number | null>(null);
+
+  //API通信を行う箇所
+  useEffect(() => {
+    axios(options)
+      .then((res: AxiosResponse<DateRecipes>) => {
+        const { data, status } = res;
+        setUserEventList(data);
+        setStatus(status);
+      })
+      .catch((e: AxiosError<{ error: string }>) => {
+        // エラー処理
+        console.log(e.message);
+      });
+  }, []);
+
+  // console.log(userEventList);
+
   // ダミーデータ
   const dummyEventList: EventList = {
     result: [
@@ -145,7 +179,6 @@ const Calendar = () => {
         });
       });
     });
-    // console.log(materials);
     setMaterialList(materials);
   }
 
