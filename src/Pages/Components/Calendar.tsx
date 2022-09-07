@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
-import FullCalendar, { DateSelectArg, DateUnselectArg } from '@fullcalendar/react';
+import FullCalendar, { DateSelectArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
-import { EventList } from '../../Types/EventList';
 import { Event } from '../../Types/Event';
 import { useNavigate } from 'react-router-dom';
 import { setSelectDayStart } from '../../store/selectMenuInfo';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -20,7 +19,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
-import FunctionStringToInt from './FunctionStringToInt';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -50,119 +48,44 @@ const options: AxiosRequestConfig = {
   withCredentials: false,
   params: {
     userId: 1,
-    start: "2022-09-07",
-    end: "2022-09-10",
+    start: "2022-09-07 00:00:00",
+    end: "2022-09-10 00:00:00",
   }
 };
 
 const Calendar = () => {
-  const [userEventList, setUserEventList] = useState<EventList>();
-  const [status, setStatus] = useState<number | null>(null);
+  const [userEventList, setUserEventList] = useState<Event[]>([] as Event[]);
 
   //API通信を行う箇所
   useEffect(() => {
     axios(options)
-      .then((res: AxiosResponse<EventList>) => {
-        const { data, status } = res;
-        console.log(data);
-        setUserEventList(data);
-        setStatus(status);
+      .then((res: AxiosResponse<Event[]>) => {
+        const data: Event[] = res.data;
+        const updateData: Event[] = [];
+        data.map((event: Event) => {
+          const updateEvent: Event = {
+            title: event.title,
+            date: event.date.slice(0, event.date.indexOf(" ")),
+            color: event.color,
+            recipe: event.recipe
+          }
+          updateData.push(updateEvent);
+        })
+        setUserEventList(updateData);
       })
       .catch((e: AxiosError<{ error: string }>) => {
         // エラー処理
         console.log(e.message);
       });
-  }, []);
+  });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  // ダミーデータ
-  const dummyEventList: EventList = {
-    result: [
-      {
-        title: "牛丼",
-        date: "2022-09-22",
-        color: "red",
-        recipe: {
-          recipeId: 1,
-          recipeName: '牛丼',
-          recipeImage: "image",
-          recipeUrl: "url",
-          recipeCost: "100",
-          recipeIndication: "5分",
-          recipeCategory: "昼",
-          recipeMaterials: ["ブロッコリー", "白菜"],  
-        },
-      },
-      {
-        title: "牛丼",
-        date: "2022-09-22",
-        color: "blue",
-        recipe: {
-          recipeId: 1,
-          recipeName: '牛丼',
-          recipeImage: "image",
-          recipeUrl: "url",
-          recipeCost: "100",
-          recipeIndication: "5分",
-          recipeCategory: "昼",
-          recipeMaterials: ["牛肉", "玉ねぎ"],  
-        },
-      },
-      {
-        title: "カレー",
-        date: "2022-09-23",
-        color: "red",
-        recipe: {
-          recipeId: 1,
-          recipeName: '牛丼',
-          recipeImage: "image",
-          recipeUrl: "url",
-          recipeCost: "100",
-          recipeIndication: "5分",
-          recipeCategory: "昼",
-          recipeMaterials: ["じゃがいも", "カレールー"],  
-        },
-      },
-      {
-        title: "サラダ",
-        date: "2022-09-23",
-        color: "green",
-        recipe: {
-          recipeId: 1,
-          recipeName: '牛丼',
-          recipeImage: "image",
-          recipeUrl: "url",
-          recipeCost: "100",
-          recipeIndication: "5分",
-          recipeCategory: "昼",
-          recipeMaterials: ["キャベツ", "玉ねぎ"],  
-        },
-      },
-      {
-        title: "油淋鶏",
-        date: "2022-09-24",
-        color: "red",
-        recipe: {
-          recipeId: 1,
-          recipeName: '牛丼',
-          recipeImage: "image",
-          recipeUrl: "url",
-          recipeCost: "100",
-          recipeIndication: "5分",
-          recipeCategory: "昼",
-          recipeMaterials: ["鶏肉", "ねぎ", "キャベツ"],  
-        },
-      },
-    ]
-  };
-
 
   const [materialList, setMaterialList] = useState([] as string[]);
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
-    setMaterialList([]);
+    setMaterialList([] as string[]);
     dispatch(setSelectDayStart(selectionInfo.startStr));
 
     const startDate = new Date(selectionInfo.startStr);
@@ -175,7 +98,7 @@ const Calendar = () => {
 
     const materials: string[] = [];
     dateList.map((date: string) => {
-      const eventList = dummyEventList.result.filter((event: Event) => event.date == date);
+      const eventList = userEventList.filter((event: Event) => event.date === date);
       eventList.map((event) => {
         const recipeMaterials: string[] = event.recipe.recipeMaterials;
         recipeMaterials.map((material) => {
@@ -199,17 +122,14 @@ const Calendar = () => {
   }
 
   //TODO 画面外クリック時に選択初期化処理をはさむ
-  const handleDateUnSelect = (unSelectionInfo : DateUnselectArg) => {
+  // const handleDateUnSelect = (unSelectionInfo : DateUnselectArg) => {
     //setSelectDayStart("");
     //console.log(unSelectionInfo.jsEvent.target.type);
     //let target = unSelectionInfo.jsEvent.target as HTMLElement;    // <-- ココ！
     //console.log(target.type);
 
-  }
+  // }
 
-  const handleClickRecipeMaterial = () => {
-    console.log(materialList);
-  }
   const handleClickAddRecipe = () => {
     navigate('/MenuPage');
   }
@@ -234,11 +154,11 @@ const Calendar = () => {
             right: 'next', 
           }}
           initialView="dayGridMonth" // 初期表示のモードを設定する
-          events={dummyEventList.result}
+          events={userEventList}
           contentHeight='auto'
           selectable={true}
           select={handleDateSelect}
-          unselect={handleDateUnSelect}
+          // unselect={handleDateUnSelect}
           //unselectAuto={true}
         />
       </div>
