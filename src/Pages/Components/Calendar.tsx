@@ -7,7 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { Event } from '../../Types/Event';
 import { useNavigate } from 'react-router-dom';
 import { setSelectDayStart } from '../../store/selectMenuInfo';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -20,6 +20,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 import { API_ENDPOINT } from '../../Setting';
+import {RootState} from '../../store';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,41 +42,50 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const options: AxiosRequestConfig = {
-  url: `${API_ENDPOINT}/user/recipe`,
-  method: "GET",
-  withCredentials: false,
-  params: {
-    userId: 1,
-    start: "2022-09-07 00:00:00",
-    end: "2022-09-10 00:00:00",
-  }
-};
 
 const Calendar = () => {
+  const user_id = useSelector((state: RootState) => state.login_user_info.id);
+
   const [userEventList, setUserEventList] = useState<Event[]>([] as Event[]);
+
+  const is_user_login = (user_id > 0);
+
+  const options: AxiosRequestConfig = {
+    url: `${API_ENDPOINT}/user/recipe`,
+    method: "GET",
+    withCredentials: false,
+    params: {
+      userId: user_id,
+      start: "2022-08-01 00:00:00",
+      end: "2022-10-10 00:00:00",
+    }
+  };
 
   //API通信を行う箇所
   useEffect(() => {
-    axios(options)
-      .then((res: AxiosResponse<Event[]>) => {
-        const data: Event[] = res.data;
-        const updateData: Event[] = [];
-        data.map((event: Event) => {
-          const updateEvent: Event = {
-            title: event.title,
-            date: event.date.slice(0, event.date.indexOf(" ")),
-            color: event.color,
-            recipe: event.recipe
-          }
-          updateData.push(updateEvent);
+    if(!(user_id > 0)){
+      navigate('/login');
+    }else{
+      axios(options)
+        .then((res: AxiosResponse<Event[]>) => {
+          const data: Event[] = res.data;
+          const updateData: Event[] = [];
+          data.map((event: Event) => {
+            const updateEvent: Event = {
+              title: event.title,
+              date: event.date.slice(0, event.date.indexOf(" ")),
+              color: event.color,
+              recipe: event.recipe
+            }
+            updateData.push(updateEvent);
+          })
+          setUserEventList(updateData);
         })
-        setUserEventList(updateData);
-      })
-      .catch((e: AxiosError<{ error: string }>) => {
-        // エラー処理
-        console.log(e.message);
-      });
+        .catch((e: AxiosError<{ error: string }>) => {
+          // エラー処理
+          console.log(e.message);
+        });
+    }
   });
 
   const navigate = useNavigate();

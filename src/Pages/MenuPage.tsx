@@ -46,6 +46,7 @@ const MenuPage = () => {
     navigate('/');
   };
 
+  const user_id = useSelector((state: RootState) => state.login_user_info.id);
   const select_day_start = useSelector((state: RootState) => state.selected_menu_info.selected_day_start);
   
   useEffect(() => {
@@ -91,7 +92,7 @@ const MenuPage = () => {
                   <div style={style_MenuListContainer}>
                             {menu_list_breakfast?.map((output: Recipe, index: number) => {
                               return <MenuCard
-                                user_id={1}
+                                user_id={user_id}
                                 recipe_id={output.recipeId}
                                 menu_name={output.recipeName}
                                 img_url={output.recipeImage}
