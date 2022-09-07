@@ -32,12 +32,15 @@ const MenuPage = () => {
   };
 
   const navigateChange = (event: React.SyntheticEvent, newValue: string) => {
+    //alert('メニューを登録しました。');
     navigate('/');
   };
 
+  const select_day_start = useSelector((state: RootState) => state.selected_menu_info.selected_day_start);
   
   useEffect(() => {
-    axios.get(API_ENDPOINT + `recipe_return_1`)
+    axios.get(API_ENDPOINT + `recipe?recipeCategory=47`)
+    //axios.get("https://v163-44-255-248.oox1.static.cnode.io/api/dev/recipe?recipeCategory=14-122")
     .then(res => {
       setIsLoading(false);
       setMenu_list(res.data);
@@ -47,7 +50,6 @@ const MenuPage = () => {
   }, []);
   return (
     <div style={style_MenuPage}>
-      {useSelector((state: RootState) => state.selected_menu_info.selected_day_start)}
       {isLoading?
       //ロード中に表示する画面
       <Box sx={{ display: 'flex' }}>
@@ -67,11 +69,12 @@ const MenuPage = () => {
         <div style={style_MenuListContainer}>
                   {menu_list.map((output: Recipe, index: number) => {
                     return <MenuCard
-                      user_id={11}
+                      user_id={1}
+                      recipe_data={output}
                       recipe_id={output.recipeId}
                       menu_name={output.recipeName}
                       detail_url={output.recipeUrl}
-                      selected_date="1999-09-19"
+                      selected_date={select_day_start}
                       setIsLoadingEvent={setIsLoading}
                       navigateChangeEvent={navigateChange}
                     />;

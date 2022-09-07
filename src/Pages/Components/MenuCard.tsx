@@ -10,8 +10,11 @@ import Typography from '@mui/material/Typography';
 
 import {API_ENDPOINT} from '../../Setting';
 
+import {Recipe} from '../../Types/Recipe';
+
 type Props = {
   user_id: number,
+  recipe_data: Recipe,
   recipe_id: number,
   menu_name: string,
   detail_url: string,
@@ -23,7 +26,7 @@ type Props = {
 const selectDayMenu = (props: Props) => {
   props.setIsLoadingEvent(true);
   axios
-  .post(API_ENDPOINT + "success", {
+  .post(API_ENDPOINT + "user/recipe", {
       "userId": props.user_id,
       "date": props.selected_date,
       "recipeId": props.recipe_id,

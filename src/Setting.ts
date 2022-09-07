@@ -1,2 +1,2 @@
-export const API_ENDPOINT = "http://localhost:3004/";
+export const API_ENDPOINT = "https://v163-44-255-248.oox1.static.cnode.io/api/dev/";
 
