@@ -8,6 +8,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
+import {API_ENDPOINT} from '../../Setting';
+
 type Props = {
   user_id: number,
   recipe_id: number,
@@ -21,7 +23,7 @@ type Props = {
 const selectDayMenu = (props: Props) => {
   props.setIsLoadingEvent(true);
   axios
-  .post("http://localhost:3004/success", {
+  .post(API_ENDPOINT + "success", {
       "userId": props.user_id,
       "date": props.selected_date,
       "recipeId": props.recipe_id,

@@ -16,6 +16,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import MenuCard from './Components/MenuCard';
 import {Recipe} from '../Types/Recipe';
 import {RootState} from '../store';
+import {API_ENDPOINT} from '../Setting';
 
 
 
@@ -36,7 +37,7 @@ const MenuPage = () => {
 
   
   useEffect(() => {
-    axios.get(`http://localhost:3004/recipe_return_1`)
+    axios.get(API_ENDPOINT + `recipe_return_1`)
     .then(res => {
       setIsLoading(false);
       setMenu_list(res.data);
