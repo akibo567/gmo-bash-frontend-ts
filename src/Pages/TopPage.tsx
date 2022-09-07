@@ -9,7 +9,6 @@ import Calendar from './Components/Calendar';
 const TopPage = () => {
   return (
     <>
-    <div>Calendar</div>
       <Calendar></Calendar>
       <NavLink to="/MenuPage">
         <p>メニュー</p>
