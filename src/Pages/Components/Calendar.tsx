@@ -3,6 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { EventList } from '../../Types/EventList';
 import { Event } from '../../Types/Event';
+import { Button } from '@mui/material';
 
 
 const Calendar = () => {
@@ -86,29 +87,61 @@ const Calendar = () => {
     ]
   };
 
+  const materialList: string[] = [];
+
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
     const selectDate: string = selectionInfo.startStr;
     const result = eventList.result.filter((event: Event) => event.date === selectDate);
-    console.log(result);
-}
+    result.map((event) => {
+      const recipeMaterials: string[] = event.recipe.recipeMaterials;
+      recipeMaterials.map((material) => materialList.push(material));
+    });
+  }
+
+  const handleClickRecipeMaterial = () => {
+    console.log(materialList);
+  }
 
   return (
     <>
-    <div>
-    <FullCalendar
-      plugins={[dayGridPlugin, interactionPlugin]} 
-      headerToolbar={{
-        left: 'prev',
-        center: 'title',
-        right: 'next', 
-      }}
-      initialView="dayGridMonth" // 初期表示のモードを設定する
-      events={eventList.result}
-      contentHeight='auto'
-      selectable={true}
-      select={handleDateSelect}
-    />
-    </div>
+      <div>
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]} 
+          headerToolbar={{
+            left: 'prev',
+            center: 'title',
+            right: 'next', 
+          }}
+          initialView="dayGridMonth" // 初期表示のモードを設定する
+          events={eventList.result}
+          contentHeight='auto'
+          selectable={true}
+          select={handleDateSelect}
+        />
+      </div>
+      <Button 
+        variant="contained" 
+        disableElevation
+        size='large'
+        fullWidth
+        sx={{
+          textAlign: 'center',
+          marginTop: 2,
+        }}>
+        レシピ選択
+      </Button>
+      <Button 
+        onClick={handleClickRecipeMaterial}
+        variant="contained" 
+        disableElevation
+        size='large'
+        fullWidth
+        sx={{
+          textAlign: 'center',
+          marginTop: 2,
+        }}>
+        材料を表示
+      </Button>
     </>
   )
 }
