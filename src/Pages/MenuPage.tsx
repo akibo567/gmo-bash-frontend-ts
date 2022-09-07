@@ -108,7 +108,7 @@ const MenuPage = () => {
                   <div style={style_MenuListContainer}>
                             {menu_list_lunch?.map((output: Recipe, index: number) => {
                               return <MenuCard
-                                user_id={1}
+                                user_id={user_id}
                                 recipe_id={output.recipeId}
                                 menu_name={output.recipeName}
                                 detail_url={output.recipeUrl}
@@ -124,7 +124,7 @@ const MenuPage = () => {
                   <div style={style_MenuListContainer}>
                             {menu_list_dinner?.map((output: Recipe, index: number) => {
                               return <MenuCard
-                                user_id={1}
+                                user_id={user_id}
                                 recipe_id={output.recipeId}
                                 menu_name={output.recipeName}
                                 detail_url={output.recipeUrl}
