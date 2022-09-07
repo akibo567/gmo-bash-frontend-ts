@@ -87,11 +87,20 @@ const Calendar = () => {
     ]
   };
 
+  const materialList: string[] = [];
+
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
     const selectDate: string = selectionInfo.startStr;
     const result = eventList.result.filter((event: Event) => event.date === selectDate);
-    console.log(result);
-}
+    result.map((event) => {
+      const recipeMaterials: string[] = event.recipe.recipeMaterials;
+      recipeMaterials.map((material) => materialList.push(material));
+    });
+  }
+
+  const handleClickRecipeMaterial = () => {
+    console.log(materialList);
+  }
 
   return (
     <>
@@ -122,6 +131,7 @@ const Calendar = () => {
         レシピ選択
       </Button>
       <Button 
+        onClick={handleClickRecipeMaterial}
         variant="contained" 
         disableElevation
         size='large'
