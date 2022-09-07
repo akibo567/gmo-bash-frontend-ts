@@ -119,6 +119,17 @@ const Calendar = () => {
           textAlign: 'center',
           marginTop: 2,
         }}>
+        レシピ選択
+      </Button>
+      <Button 
+        variant="contained" 
+        disableElevation
+        size='large'
+        fullWidth
+        sx={{
+          textAlign: 'center',
+          marginTop: 2,
+        }}>
         材料を表示
       </Button>
     </>
