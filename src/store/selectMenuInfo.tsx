@@ -8,7 +8,7 @@ type State = {
 export const selectMenuInfo = createSlice({
   name: 'selected_menu_info',
   initialState: {
-    selected_day_start: "1970-01-01",
+    selected_day_start: "",
   },
   reducers: {
     setSelectDayStart: (state: State, action: PayloadAction<string>) => {

@@ -49,21 +49,25 @@ const MenuPage = () => {
   const select_day_start = useSelector((state: RootState) => state.selected_menu_info.selected_day_start);
   
   useEffect(() => {
-    axios.post(API_ENDPOINT + "recipe/list", {
-        "breakfast": BREAKFAST_MENU_TYPES,
-        "lunch": LUNCH_MENU_TYPES,
-        "dinner": DINNER_MENU_TYPES,
-    })
-    .then((res) => {
-      setMenuListBreakfast(res.data[0]);
-      setMenuListLunch(res.data[1]);
-      setMenuListDinner(res.data[2]);
-      console.log(res.data);
+    if(select_day_start != ""){
+      axios.post(API_ENDPOINT + "recipe/list", {
+          "breakfast": BREAKFAST_MENU_TYPES,
+          "lunch": LUNCH_MENU_TYPES,
+          "dinner": DINNER_MENU_TYPES,
+      })
+      .then((res) => {
+        setMenuListBreakfast(res.data[0]);
+        setMenuListLunch(res.data[1]);
+        setMenuListDinner(res.data[2]);
+        console.log(res.data);
 
-      setIsLoading(false);
-    }).catch(err => {
-      alert('通信エラー:'+err);
-    });
+        setIsLoading(false);
+      }).catch(err => {
+        alert('通信エラー:'+err);
+      });
+    }else{
+      navigate('/');
+    }
   }, []);
 
   return (
