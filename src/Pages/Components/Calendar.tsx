@@ -1,25 +1,84 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
 import FullCalendar, { DateSelectArg, DateUnselectArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+
 import { EventList } from '../../Types/EventList';
 import { Event } from '../../Types/Event';
-import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { setSelectDayStart } from '../../store/selectMenuInfo';
 import { useSelector, useDispatch } from 'react-redux'
 
+import { Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Typography } from '@mui/material';
+import FunctionStringToInt from './FunctionStringToInt';
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
+const url = "https://v163-44-255-248.oox1.static.cnode.io/api/dev";
+
+const options: AxiosRequestConfig = {
+  url: `${url}/user/recipe`,
+  method: "GET",
+  withCredentials: false,
+  params: {
+    userId: 1,
+    start: "2022-09-07",
+    end: "2022-09-10",
+  }
+};
 
 const Calendar = () => {
+  const [userEventList, setUserEventList] = useState<EventList>();
+  const [status, setStatus] = useState<number | null>(null);
+
+  //API通信を行う箇所
+  useEffect(() => {
+    axios(options)
+      .then((res: AxiosResponse<EventList>) => {
+        const { data, status } = res;
+        console.log(data);
+        setUserEventList(data);
+        setStatus(status);
+      })
+      .catch((e: AxiosError<{ error: string }>) => {
+        // エラー処理
+        console.log(e.message);
+      });
+  }, []);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  //const [calSelectDayStart, setCalSelectDayStart] = useState<string>("");
-
-  const eventList: EventList = {
+  
+  // ダミーデータ
+  const dummyEventList: EventList = {
     result: [
       {
         title: "牛丼",
@@ -48,11 +107,11 @@ const Calendar = () => {
           recipeCost: "100",
           recipeIndication: "5分",
           recipeCategory: "昼",
-          recipeMaterials: ["ブロッコリー", "白菜"],  
+          recipeMaterials: ["牛肉", "玉ねぎ"],  
         },
       },
       {
-        title: "牛丼",
+        title: "カレー",
         date: "2022-09-23",
         color: "red",
         recipe: {
@@ -63,11 +122,11 @@ const Calendar = () => {
           recipeCost: "100",
           recipeIndication: "5分",
           recipeCategory: "昼",
-          recipeMaterials: ["ブロッコリー", "白菜"],  
+          recipeMaterials: ["じゃがいも", "カレールー"],  
         },
       },
       {
-        title: "牛丼",
+        title: "サラダ",
         date: "2022-09-23",
         color: "green",
         recipe: {
@@ -78,11 +137,11 @@ const Calendar = () => {
           recipeCost: "100",
           recipeIndication: "5分",
           recipeCategory: "昼",
-          recipeMaterials: ["ブロッコリー", "白菜"],  
+          recipeMaterials: ["キャベツ", "玉ねぎ"],  
         },
       },
       {
-        title: "牛丼",
+        title: "油淋鶏",
         date: "2022-09-24",
         color: "red",
         recipe: {
@@ -93,22 +152,50 @@ const Calendar = () => {
           recipeCost: "100",
           recipeIndication: "5分",
           recipeCategory: "昼",
-          recipeMaterials: ["ブロッコリー", "白菜"],  
+          recipeMaterials: ["鶏肉", "ねぎ", "キャベツ"],  
         },
       },
     ]
   };
 
-  const materialList: string[] = [];
+
+  const [materialList, setMaterialList] = useState([] as string[]);
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
+    setMaterialList([]);
     dispatch(setSelectDayStart(selectionInfo.startStr));
-    const selectDate: string = selectionInfo.startStr;
-    const result = eventList.result.filter((event: Event) => event.date === selectDate);
-    result.map((event) => {
-      const recipeMaterials: string[] = event.recipe.recipeMaterials;
-      recipeMaterials.map((material) => materialList.push(material));
+
+    const startDate = new Date(selectionInfo.startStr);
+    const endDate = new Date(selectionInfo.endStr);
+    const dateList = [];
+    
+    for(let date = startDate; date < endDate; date.setDate(date.getDate()+1)) {
+      dateList.push(formatDate(date));
+    }
+
+    const materials: string[] = [];
+    dateList.map((date: string) => {
+      const eventList = dummyEventList.result.filter((event: Event) => event.date == date);
+      eventList.map((event) => {
+        const recipeMaterials: string[] = event.recipe.recipeMaterials;
+        recipeMaterials.map((material) => {
+          if(!materials.includes(material)) {
+            materials.push(material);
+          }
+        });
+      });
     });
+    setMaterialList(materials);
+  }
+
+  const displayRecipeMaterial = () => {
+    return (
+      materialList.map((material: string) => (
+          <StyledTableRow key={material}>
+            <StyledTableCell component="th" scope="row" align='center'>{material}</StyledTableCell>
+          </StyledTableRow>
+      ))
+    )
   }
 
   //TODO 画面外クリック時に選択初期化処理をはさむ
@@ -125,8 +212,16 @@ const Calendar = () => {
   }
   const handleClickAddRecipe = () => {
     navigate('/MenuPage');
-    //alert(selectDayStart);
   }
+
+  // 日付をYYYY-MM-DDの書式で返すメソッド
+  const formatDate = (date: Date) => {
+    const year = date.getFullYear();
+    const month = ('00' + (date.getMonth()+1)).slice(-2);
+    const day = ('00' + date.getDate()).slice(-2);
+    return (`${year}-${month}-${day}`);
+  }
+  
 
   return (
     <>
@@ -139,7 +234,7 @@ const Calendar = () => {
             right: 'next', 
           }}
           initialView="dayGridMonth" // 初期表示のモードを設定する
-          events={eventList.result}
+          events={dummyEventList.result}
           contentHeight='auto'
           selectable={true}
           select={handleDateSelect}
@@ -155,22 +250,27 @@ const Calendar = () => {
         fullWidth
         sx={{
           textAlign: 'center',
-          marginTop: 2,
+          marginTop: 5,
         }}>
         レシピ選択
       </Button>
-      <Button 
-        onClick={handleClickRecipeMaterial}
-        variant="contained" 
-        disableElevation
-        size='large'
-        fullWidth
-        sx={{
-          textAlign: 'center',
-          marginTop: 2,
-        }}>
-        材料を表示
-      </Button>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700, marginTop: 5}} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align='center'>食材一覧</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {displayRecipeMaterial()}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Typography
+        fontSize={32}
+        sx={{marginTop: 4}}>
+        合計金額  10万円
+      </Typography>
     </>
   )
 }
