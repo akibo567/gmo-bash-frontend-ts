@@ -25,6 +25,9 @@ import {API_ENDPOINT,
    DINNER_MENU_TYPES,
 } from '../Setting';
 
+const breakfastFavType = '38-501';
+const lunchFavType = '38-502';
+const dinnerFavType = '38-503';
 
 
 const MenuPage = () => {
@@ -100,6 +103,7 @@ const MenuPage = () => {
                                 selected_date={select_day_start+" "+BREAKFAST_TIME}
                                 setIsLoadingEvent={setIsLoading}
                                 navigateChangeEvent={navigateChange}
+                                isRecomended={output.recipeCategory==breakfastFavType}
                               />;
                             })}
                           </div>
@@ -116,6 +120,7 @@ const MenuPage = () => {
                                 selected_date={select_day_start+" "+LUNCH_TIME}
                                 setIsLoadingEvent={setIsLoading}
                                 navigateChangeEvent={navigateChange}
+                                isRecomended={output.recipeCategory==lunchFavType}
                               />;
                             })}
                           </div>
@@ -132,6 +137,7 @@ const MenuPage = () => {
                                 selected_date={select_day_start+" "+DINNER_TIME}
                                 setIsLoadingEvent={setIsLoading}
                                 navigateChangeEvent={navigateChange}
+                                isRecomended={output.recipeCategory==dinnerFavType}
                               />;
                             })}
                           </div>
