@@ -1,12 +1,24 @@
-import FullCalendar, { DateSelectArg } from '@fullcalendar/react';
+import React, { useState } from "react";
+import FullCalendar, { DateSelectArg, DateUnselectArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { EventList } from '../../Types/EventList';
 import { Event } from '../../Types/Event';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { setSelectDayStart } from '../../store/selectMenuInfo';
+import { useSelector, useDispatch } from 'react-redux'
+
+
+
 
 
 const Calendar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  //const [calSelectDayStart, setCalSelectDayStart] = useState<string>("");
+
   const eventList: EventList = {
     result: [
       {
@@ -90,6 +102,7 @@ const Calendar = () => {
   const materialList: string[] = [];
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
+    dispatch(setSelectDayStart(selectionInfo.startStr));
     const selectDate: string = selectionInfo.startStr;
     const result = eventList.result.filter((event: Event) => event.date === selectDate);
     result.map((event) => {
@@ -98,8 +111,21 @@ const Calendar = () => {
     });
   }
 
+  //TODO 画面外クリック時に選択初期化処理をはさむ
+  const handleDateUnSelect = (unSelectionInfo : DateUnselectArg) => {
+    //setSelectDayStart("");
+    //console.log(unSelectionInfo.jsEvent.target.type);
+    //let target = unSelectionInfo.jsEvent.target as HTMLElement;    // <-- ココ！
+    //console.log(target.type);
+
+  }
+
   const handleClickRecipeMaterial = () => {
     console.log(materialList);
+  }
+  const handleClickAddRecipe = () => {
+    navigate('/MenuPage');
+    //alert(selectDayStart);
   }
 
   return (
@@ -117,9 +143,12 @@ const Calendar = () => {
           contentHeight='auto'
           selectable={true}
           select={handleDateSelect}
+          unselect={handleDateUnSelect}
+          //unselectAuto={true}
         />
       </div>
       <Button 
+        onClick={handleClickAddRecipe}
         variant="contained" 
         disableElevation
         size='large'

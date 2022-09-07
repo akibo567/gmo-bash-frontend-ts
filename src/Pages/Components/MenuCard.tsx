@@ -15,6 +15,7 @@ type Props = {
   detail_url: string,
   selected_date: string,
   setIsLoadingEvent: any,
+  navigateChangeEvent: any,
 }
 
 const selectDayMenu = (props: Props) => {
@@ -27,7 +28,9 @@ const selectDayMenu = (props: Props) => {
   })
   .then((res) => {
     if(res.data.message == "success"){
-      alert("成功");
+      props.navigateChangeEvent();
+    }else{
+      alert("エラー");
     };
   }).catch(err => {
     alert('通信エラー:'+err);
