@@ -6,9 +6,12 @@ import TopPage from './Pages/TopPage';
 import MenuPage from './Pages/MenuPage';
 import Header from './Pages/Components/Header';
 
+import { store } from './store';
+import { Provider } from 'react-redux';
+
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <div>
         <BrowserRouter>
           <Header />
@@ -18,7 +21,7 @@ function App() {
           </Routes>
         </BrowserRouter>      
       </div>
-    </>
+    </Provider>
   );
 }
 

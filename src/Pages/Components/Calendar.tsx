@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from "axios";
-
-import FullCalendar, { DateSelectArg } from '@fullcalendar/react';
+import FullCalendar, { DateSelectArg, DateUnselectArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 import { EventList } from '../../Types/EventList';
 import { Event } from '../../Types/Event';
+import { useNavigate } from 'react-router-dom';
+import { setSelectDayStart } from '../../store/selectMenuInfo';
+import { useSelector, useDispatch } from 'react-redux'
 
 import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -72,6 +74,9 @@ const Calendar = () => {
       });
   }, []);
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   // ダミーデータ
   const dummyEventList: EventList = {
     result: [
@@ -158,6 +163,7 @@ const Calendar = () => {
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
     setMaterialList([]);
+    dispatch(setSelectDayStart(selectionInfo.startStr));
 
     const startDate = new Date(selectionInfo.startStr);
     const endDate = new Date(selectionInfo.endStr);
@@ -192,6 +198,22 @@ const Calendar = () => {
     )
   }
 
+  //TODO 画面外クリック時に選択初期化処理をはさむ
+  const handleDateUnSelect = (unSelectionInfo : DateUnselectArg) => {
+    //setSelectDayStart("");
+    //console.log(unSelectionInfo.jsEvent.target.type);
+    //let target = unSelectionInfo.jsEvent.target as HTMLElement;    // <-- ココ！
+    //console.log(target.type);
+
+  }
+
+  const handleClickRecipeMaterial = () => {
+    console.log(materialList);
+  }
+  const handleClickAddRecipe = () => {
+    navigate('/MenuPage');
+  }
+
   // 日付をYYYY-MM-DDの書式で返すメソッド
   const formatDate = (date: Date) => {
     const year = date.getFullYear();
@@ -216,9 +238,12 @@ const Calendar = () => {
           contentHeight='auto'
           selectable={true}
           select={handleDateSelect}
+          unselect={handleDateUnSelect}
+          //unselectAuto={true}
         />
       </div>
       <Button 
+        onClick={handleClickAddRecipe}
         variant="contained" 
         disableElevation
         size='large'
