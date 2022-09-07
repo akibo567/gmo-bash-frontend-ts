@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from 'react';
+
 import FullCalendar, { DateSelectArg } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -37,7 +39,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const Calendar = () => {
-  const eventList: EventList = {
+  // ダミーデータ
+  const dummyEventList: EventList = {
     result: [
       {
         title: "牛丼",
@@ -66,11 +69,11 @@ const Calendar = () => {
           recipeCost: "100",
           recipeIndication: "5分",
           recipeCategory: "昼",
-          recipeMaterials: ["ブロッコリー", "白菜"],  
+          recipeMaterials: ["牛肉", "玉ねぎ"],  
         },
       },
       {
-        title: "牛丼",
+        title: "カレー",
         date: "2022-09-23",
         color: "red",
         recipe: {
@@ -81,11 +84,11 @@ const Calendar = () => {
           recipeCost: "100",
           recipeIndication: "5分",
           recipeCategory: "昼",
-          recipeMaterials: ["ブロッコリー", "白菜"],  
+          recipeMaterials: ["じゃがいも", "カレールー"],  
         },
       },
       {
-        title: "牛丼",
+        title: "サラダ",
         date: "2022-09-23",
         color: "green",
         recipe: {
@@ -96,11 +99,11 @@ const Calendar = () => {
           recipeCost: "100",
           recipeIndication: "5分",
           recipeCategory: "昼",
-          recipeMaterials: ["ブロッコリー", "白菜"],  
+          recipeMaterials: ["キャベツ", "玉ねぎ"],  
         },
       },
       {
-        title: "牛丼",
+        title: "油淋鶏",
         date: "2022-09-24",
         color: "red",
         recipe: {
@@ -111,26 +114,40 @@ const Calendar = () => {
           recipeCost: "100",
           recipeIndication: "5分",
           recipeCategory: "昼",
-          recipeMaterials: ["ブロッコリー", "白菜"],  
+          recipeMaterials: ["鶏肉", "ねぎ", "キャベツ"],  
         },
       },
     ]
   };
 
-  let materialList: string[] = [];
+  const [materialList, setMaterialList] = useState([] as string[]);
+
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
-    materialList = [];
+    setMaterialList([]);
+
     const selectDate: string = selectionInfo.startStr;
-    const result = eventList.result.filter((event: Event) => event.date === selectDate);
-    result.map((event) => {
+    const materials: string[] = [];
+    const eventList = dummyEventList.result.filter((event: Event) => event.date === selectDate);
+    eventList.map((event) => {
       const recipeMaterials: string[] = event.recipe.recipeMaterials;
-      recipeMaterials.map((material) => materialList.push(material));
+      recipeMaterials.map((material) => {
+        if(!materials.includes(material)) {
+          materials.push(material);
+        }
+      });
     });
+    setMaterialList(materials);
   }
 
-  const handleClickRecipeMaterial = () => {
-    console.log(materialList);
+  const displayRecipeMaterial = () => {
+    return (
+      materialList.map((material: string) => (
+          <StyledTableRow key={material}>
+            <StyledTableCell component="th" scope="row" align='center'>{material}</StyledTableCell>
+          </StyledTableRow>
+      ))
+    )
   }
 
   return (
@@ -144,7 +161,7 @@ const Calendar = () => {
             right: 'next', 
           }}
           initialView="dayGridMonth" // 初期表示のモードを設定する
-          events={eventList.result}
+          events={dummyEventList.result}
           contentHeight='auto'
           selectable={true}
           select={handleDateSelect}
@@ -157,35 +174,19 @@ const Calendar = () => {
         fullWidth
         sx={{
           textAlign: 'center',
-          marginTop: 2,
+          marginTop: 5,
         }}>
         レシピ選択
       </Button>
-      <Button 
-        onClick={handleClickRecipeMaterial}
-        variant="contained" 
-        disableElevation
-        size='large'
-        fullWidth
-        sx={{
-          textAlign: 'center',
-          marginTop: 2,
-        }}>
-        材料を表示
-      </Button>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700, marginTop: 10}} aria-label="customized table">
+        <Table sx={{ minWidth: 700, marginTop: 5}} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell align='center'>食材一覧</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {materialList.map((material) => (
-              <StyledTableRow key={material}>
-                <StyledTableCell component="th" scope="row" align='center'>{material}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {displayRecipeMaterial()}
           </TableBody>
         </Table>
       </TableContainer>
