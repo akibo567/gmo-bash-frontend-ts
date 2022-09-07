@@ -3,6 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { EventList } from '../../Types/EventList';
 import { Event } from '../../Types/Event';
+import { Button } from '@mui/material';
 
 
 const Calendar = () => {
@@ -94,21 +95,32 @@ const Calendar = () => {
 
   return (
     <>
-    <div>
-    <FullCalendar
-      plugins={[dayGridPlugin, interactionPlugin]} 
-      headerToolbar={{
-        left: 'prev',
-        center: 'title',
-        right: 'next', 
-      }}
-      initialView="dayGridMonth" // 初期表示のモードを設定する
-      events={eventList.result}
-      contentHeight='auto'
-      selectable={true}
-      select={handleDateSelect}
-    />
-    </div>
+      <div>
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]} 
+          headerToolbar={{
+            left: 'prev',
+            center: 'title',
+            right: 'next', 
+          }}
+          initialView="dayGridMonth" // 初期表示のモードを設定する
+          events={eventList.result}
+          contentHeight='auto'
+          selectable={true}
+          select={handleDateSelect}
+        />
+      </div>
+      <Button 
+        variant="contained" 
+        disableElevation
+        size='large'
+        fullWidth
+        sx={{
+          textAlign: 'center',
+          marginTop: 2,
+        }}>
+        材料を表示
+      </Button>
     </>
   )
 }
