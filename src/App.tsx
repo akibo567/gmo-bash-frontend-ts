@@ -1,6 +1,8 @@
-import React from 'react';
 import './App.css';
-import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { ThemeProvider } from '@mui/material';
+import { theme } from './Setting-color';
 
 import TopPage from './Pages/TopPage';
 import MenuPage from './Pages/MenuPage';
@@ -17,16 +19,18 @@ function App() {
   return (
     <Provider store={store}>
       <div>
-        <BrowserRouter>
-          <Header />
-          <Routes>
-            <Route path="/" element={<TopPage />} />
-            <Route path="/MenuPage" element={<MenuPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/setting" element={<UserSettingPage />} />
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <Header />
+            <Routes>
+              <Route path="/" element={<TopPage />} />
+              <Route path="/MenuPage" element={<MenuPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/setting" element={<UserSettingPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-          </Routes>
-        </BrowserRouter>      
+            </Routes>
+          </BrowserRouter>   
+        </ThemeProvider>   
       </div>
     </Provider>
   );

@@ -19,8 +19,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
-import { API_ENDPOINT } from '../../Setting';
-import {RootState} from '../../store';
+
+import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME, BREAKFAST_COLOR, LUNCH_COLOR, DINNER_COLOR } from '../../Setting';
+import { FunctionStringToInt, formatDate } from '../../Helper';
+import { RootState } from '../../store';
+
+import "./Calendar.css";
+import listPlugin from '@fullcalendar/list';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -47,6 +52,10 @@ const Calendar = () => {
   const user_id = useSelector((state: RootState) => state.login_user_info.id);
 
   const [userEventList, setUserEventList] = useState<Event[]>([] as Event[]);
+  const [materialList, setMaterialList] = useState([] as string[]);
+  const [sumRecipeCost, setSumRecipeCost] = useState(0 as number);
+
+  let sumCost = 0;
 
   const is_user_login = (user_id > 0);
 
@@ -69,12 +78,14 @@ const Calendar = () => {
       axios(options)
         .then((res: AxiosResponse<Event[]>) => {
           const data: Event[] = res.data;
+          // dateの表示形式を変更するためにdataをupdateDataに更新する
           const updateData: Event[] = [];
           data.map((event: Event) => {
+            const tmp: string = event.date.substring(11);
             const updateEvent: Event = {
               title: event.title,
               date: event.date.slice(0, event.date.indexOf(" ")),
-              color: event.color,
+              color: (tmp === BREAKFAST_TIME) ? BREAKFAST_COLOR : ((tmp === DINNER_TIME) ? DINNER_COLOR : LUNCH_COLOR),
               recipe: event.recipe
             }
             updateData.push(updateEvent);
@@ -88,13 +99,11 @@ const Calendar = () => {
     }
   });
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const [materialList, setMaterialList] = useState([] as string[]);
-
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
     setMaterialList([] as string[]);
+    setSumRecipeCost(0 as number);
+    sumCost = 0;
+
     dispatch(setSelectDayStart(selectionInfo.startStr));
 
     const startDate = new Date(selectionInfo.startStr);
@@ -109,6 +118,11 @@ const Calendar = () => {
     dateList.map((date: string) => {
       const eventList = userEventList.filter((event: Event) => event.date === date);
       eventList.map((event) => {
+        // 食費の計算
+        sumCost += FunctionStringToInt(event.recipe.recipeCost);
+        setSumRecipeCost(sumCost);
+
+        // レシピの材料を取得
         const recipeMaterials: string[] = event.recipe.recipeMaterials;
         recipeMaterials.map((material) => {
           if(!materials.includes(material)) {
@@ -120,6 +134,7 @@ const Calendar = () => {
     setMaterialList(materials);
   }
 
+  // レシピの材料を表示
   const displayRecipeMaterial = () => {
     return (
       materialList.map((material: string) => (
@@ -139,28 +154,26 @@ const Calendar = () => {
 
   // }
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleClickAddRecipe = () => {
     navigate('/MenuPage');
-  }
-
-  // 日付をYYYY-MM-DDの書式で返すメソッド
-  const formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = ('00' + (date.getMonth()+1)).slice(-2);
-    const day = ('00' + date.getDate()).slice(-2);
-    return (`${year}-${month}-${day}`);
-  }
-  
+  }  
 
   return (
     <>
       <div>
         <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]} 
+          plugins={[dayGridPlugin, interactionPlugin, listPlugin]} 
           headerToolbar={{
             left: 'prev',
             center: 'title',
-            right: 'next', 
+            right: 'next'
+          }}
+          footerToolbar={{
+            left: 'dayGridMonth',
+            right: 'listMonth'
           }}
           initialView="dayGridMonth" // 初期表示のモードを設定する
           events={userEventList}
@@ -198,7 +211,7 @@ const Calendar = () => {
       <Typography
         fontSize={32}
         sx={{marginTop: 4}}>
-        合計金額  10万円
+        合計金額  {sumRecipeCost}円
       </Typography>
     </>
   )

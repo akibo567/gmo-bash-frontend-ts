@@ -1,0 +1,49 @@
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 2px;
+}
+
+th.fc-day-sat .fc-col-header-cell-cushion {
+  color: blue;
+}
+th.fc-day-sun .fc-col-header-cell-cushion{
+  color: red;
+}
+.fc-col-header-cell-cushion {
+  color: black;
+}
+.fc-daygrid-day-number {
+  color: black;
+}
+td.fc-day-sat .fc-daygrid-day-number {
+  color: blue;
+}
+td.fc-day-sun .fc-daygrid-day-number {
+  color: red;
+}
+
+.fc-header-toolbar{
+  background-color: white;
+  padding-top: 32px;
+  padding-bottom: 8px;
+}
+.fc-toolbar-title{
+  color: rgb(36, 36, 36);
+}
+
+.fc-listMonth-button.btn.btn-primary{
+  margin-right: 16px;
+  margin-left: 16px;
+}
+
+.fc-dayGridMonth-button.btn.btn-primary{
+  margin-left: 8px;
+}
+
+.fc .fc-button-primary{
+  margin-right: 16px;
+  margin-left: 16px;
+}
+
+.fc-timegrid-event, .fc-sticky{
+  color: black
+}
