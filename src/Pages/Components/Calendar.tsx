@@ -19,7 +19,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
-import { API_ENDPOINT } from '../../Setting';
+
+import { API_ENDPOINT, BREAKFAST_TIME, LUNCH_TIME, DINNER_TIME } from '../../Setting';
+import { formatDate } from '../../Helper';
 import {RootState} from '../../store';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -47,6 +49,7 @@ const Calendar = () => {
   const user_id = useSelector((state: RootState) => state.login_user_info.id);
 
   const [userEventList, setUserEventList] = useState<Event[]>([] as Event[]);
+  const [materialList, setMaterialList] = useState([] as string[]);
 
   const is_user_login = (user_id > 0);
 
@@ -71,10 +74,11 @@ const Calendar = () => {
           const data: Event[] = res.data;
           const updateData: Event[] = [];
           data.map((event: Event) => {
+            const tmp: string = event.date.substring(11);
             const updateEvent: Event = {
               title: event.title,
               date: event.date.slice(0, event.date.indexOf(" ")),
-              color: event.color,
+              color: (tmp === BREAKFAST_TIME) ? 'blue' : ((tmp === DINNER_TIME) ? 'red' : 'green'),
               recipe: event.recipe
             }
             updateData.push(updateEvent);
@@ -87,11 +91,6 @@ const Calendar = () => {
         });
     }
   });
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const [materialList, setMaterialList] = useState([] as string[]);
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
     setMaterialList([] as string[]);
@@ -139,18 +138,12 @@ const Calendar = () => {
 
   // }
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleClickAddRecipe = () => {
     navigate('/MenuPage');
-  }
-
-  // 日付をYYYY-MM-DDの書式で返すメソッド
-  const formatDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = ('00' + (date.getMonth()+1)).slice(-2);
-    const day = ('00' + date.getDate()).slice(-2);
-    return (`${year}-${month}-${day}`);
-  }
-  
+  }  
 
   return (
     <>
