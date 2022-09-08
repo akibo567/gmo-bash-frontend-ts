@@ -1,12 +1,14 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import { ThemeProvider } from '@mui/material';
+
+import { theme } from '../../Setting-color';
+
 import { useSelector } from 'react-redux';
 
-import {RootState} from '../../store';
+import { RootState } from '../../store';
 
 const Header = () => {
   const user_id = useSelector((state: RootState) => state.login_user_info.id);
@@ -23,35 +25,107 @@ const Header = () => {
               href="/"
               sx={{
                 mr: 2,
-                display: { xs: 'none', md: 'flex' },
+                display: { xs: 'none', md: 'none', lg: 'flex' },
                 fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '.3rem',
                 color: 'inherit',
                 textDecoration: 'none',
               }}
-            >
+              >
               自炊Health
             </Typography>
-            { (user_id > 0) ?
-              <Typography
-                variant="h6"
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex', lg: 'none' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+              >
+              自炊Health
+            </Typography>
+            <Typography
+                variant="h5"
                 noWrap
                 component="a"
-                href="/setting"
+                href="/"
                 sx={{
                   mr: 2,
-                  display: { xs: 'none', md: 'flex' },
+                  display: { xs: 'flex', md: 'none', lg: 'none' },
+                  flexGrow: 1,
                   fontFamily: 'monospace',
-                  fontWeight: 70,
+                  fontWeight: 700,
                   letterSpacing: '.3rem',
                   color: 'inherit',
                   textDecoration: 'none',
                 }}
-              >
-                {user_id}
-              </Typography>
-              : ""
+                >
+                自炊Health
+            </Typography>
+
+            { user_id > 0 ?
+              <div>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="/setting"
+                  sx={{
+                    mr: 2,
+                    display: { xs: 'none', md: 'none', lg: 'flex' },
+                    fontFamily: 'monospace',
+                    fontWeight: 70,
+                    letterSpacing: '.3rem',
+                    color: 'inherit',
+                    textDecoration: 'none',
+                  }}
+                  >
+                  {user_id}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="/setting"
+                  sx={{
+                    mr: 2,
+                    display: { xs: 'none', md: 'flex', lg: 'none' },
+                    fontFamily: 'monospace',
+                    fontWeight: 70,
+                    letterSpacing: '.3rem',
+                    color: 'inherit',
+                    textDecoration: 'none',
+                  }}
+                  >
+                  {user_id}
+                </Typography>
+                <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    href="/setting"
+                    sx={{
+                      mr: 2,
+                      display: { xs: 'flex', md: 'none', lg: 'none' },
+                      flexGrow: 1,
+                      fontFamily: 'monospace',
+                      fontWeight: 70,
+                      letterSpacing: '.3rem',
+                      color: 'inherit',
+                      textDecoration: 'none',
+                    }}
+                    >
+                    {user_id}
+                </Typography>
+              </div> : ""
             }
           </Toolbar>
         </AppBar>
