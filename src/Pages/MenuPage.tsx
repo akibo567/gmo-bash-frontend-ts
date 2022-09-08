@@ -23,6 +23,9 @@ import {API_ENDPOINT,
    BREAKFAST_MENU_TYPES,
    LUNCH_MENU_TYPES,
    DINNER_MENU_TYPES,
+   BREAKFAST_COLOR, 
+   LUNCH_COLOR, 
+   DINNER_COLOR,
 } from '../Setting';
 
 const breakfastFavType = '38-501';
@@ -97,11 +100,7 @@ const MenuPage = () => {
                         flexWrap: 'wrap',
                         p: 1,
                         m: 1,
-                        backgroundColor: (theme) =>
-                        theme.palette.mode === 'light'
-                          ? theme.palette.grey[200]
-                          : theme.palette.grey[200],
-                        borderRadius: 1,
+                        backgroundColor: BREAKFAST_COLOR,
                       }}>
                             {menu_list_breakfast?.map((output: Recipe, index: number) => {
                               return <Box sx={{
@@ -127,11 +126,7 @@ const MenuPage = () => {
                         p: 1,
                         m: 1,
                         bgcolor: 'background.paper',
-                        backgroundColor: (theme) =>
-                        theme.palette.mode === 'light'
-                          ? theme.palette.grey[200]
-                          : theme.palette.grey[200],
-                        borderRadius: 1,
+                        backgroundColor: LUNCH_COLOR,
                       }}>
                             {menu_list_lunch?.map((output: Recipe, index: number) => {
                               return <Box sx={{
@@ -156,11 +151,7 @@ const MenuPage = () => {
                       flexWrap: 'wrap',
                       p: 1,
                       m: 1,
-                      backgroundColor: (theme) =>
-                      theme.palette.mode === 'light'
-                        ? theme.palette.grey[200]
-                        : theme.palette.grey[200],
-                      borderRadius: 1,
+                      backgroundColor: DINNER_COLOR,
                     }}>
                       {menu_list_dinner?.map((output: Recipe, index: number) => {
                                   return <Box sx={{
