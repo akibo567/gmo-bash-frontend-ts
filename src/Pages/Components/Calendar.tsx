@@ -175,6 +175,10 @@ const Calendar = () => {
             left: 'dayGridMonth',
             right: 'listMonth'
           }}
+          buttonText={{
+            month:    'カレンダー',
+            list:     'リスト'
+          }}
           initialView="dayGridMonth" // 初期表示のモードを設定する
           events={userEventList}
           contentHeight='auto'
