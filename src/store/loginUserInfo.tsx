@@ -6,17 +6,17 @@ type State = {
 }
 
 export const loginUserInfo = createSlice({
-  name: 'login_user',
+  name: 'login_user_info',
   initialState: {
-    id: 0,
+    id: localStorage.getItem('login_user_id') ? parseInt(localStorage.getItem('login_user_id')!) : 0,
   },
   reducers: {
-    setLoginUser: (state: State, action: PayloadAction<number>) => {
+    setLoginUserId: (state: State, action: PayloadAction<number>) => {
       state.id = action.payload;
     },
   },
 });
 
-export const { setLoginUser } = loginUserInfo.actions;
+export const { setLoginUserId } = loginUserInfo.actions;
 
 export default loginUserInfo.reducer;

@@ -25,6 +25,9 @@ import {API_ENDPOINT,
    DINNER_MENU_TYPES,
 } from '../Setting';
 
+const breakfastFavType = '38-501';
+const lunchFavType = '38-502';
+const dinnerFavType = '38-503';
 
 
 const MenuPage = () => {
@@ -46,6 +49,7 @@ const MenuPage = () => {
     navigate('/');
   };
 
+  const user_id = useSelector((state: RootState) => state.login_user_info.id);
   const select_day_start = useSelector((state: RootState) => state.selected_menu_info.selected_day_start);
   
   useEffect(() => {
@@ -91,7 +95,7 @@ const MenuPage = () => {
                   <div style={style_MenuListContainer}>
                             {menu_list_breakfast?.map((output: Recipe, index: number) => {
                               return <MenuCard
-                                user_id={1}
+                                user_id={user_id}
                                 recipe_id={output.recipeId}
                                 menu_name={output.recipeName}
                                 img_url={output.recipeImage}
@@ -99,6 +103,7 @@ const MenuPage = () => {
                                 selected_date={select_day_start+" "+BREAKFAST_TIME}
                                 setIsLoadingEvent={setIsLoading}
                                 navigateChangeEvent={navigateChange}
+                                isRecomended={output.recipeCategory==breakfastFavType}
                               />;
                             })}
                           </div>
@@ -107,7 +112,7 @@ const MenuPage = () => {
                   <div style={style_MenuListContainer}>
                             {menu_list_lunch?.map((output: Recipe, index: number) => {
                               return <MenuCard
-                                user_id={1}
+                                user_id={user_id}
                                 recipe_id={output.recipeId}
                                 menu_name={output.recipeName}
                                 detail_url={output.recipeUrl}
@@ -115,6 +120,7 @@ const MenuPage = () => {
                                 selected_date={select_day_start+" "+LUNCH_TIME}
                                 setIsLoadingEvent={setIsLoading}
                                 navigateChangeEvent={navigateChange}
+                                isRecomended={output.recipeCategory==lunchFavType}
                               />;
                             })}
                           </div>
@@ -123,7 +129,7 @@ const MenuPage = () => {
                   <div style={style_MenuListContainer}>
                             {menu_list_dinner?.map((output: Recipe, index: number) => {
                               return <MenuCard
-                                user_id={1}
+                                user_id={user_id}
                                 recipe_id={output.recipeId}
                                 menu_name={output.recipeName}
                                 detail_url={output.recipeUrl}
@@ -131,6 +137,7 @@ const MenuPage = () => {
                                 selected_date={select_day_start+" "+DINNER_TIME}
                                 setIsLoadingEvent={setIsLoading}
                                 navigateChangeEvent={navigateChange}
+                                isRecomended={output.recipeCategory==dinnerFavType}
                               />;
                             })}
                           </div>
