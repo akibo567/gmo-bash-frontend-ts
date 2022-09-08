@@ -66,6 +66,8 @@ const UserSettingPage = () => {
   const handleChangeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewUserName(event.target.value);
   };
+  const user_name = useSelector((state: RootState) => state.login_user_info.name);
+
 
   
   useEffect(() => {
@@ -77,20 +79,13 @@ const UserSettingPage = () => {
   return (
     <div style={style_LoginPage}>
       <>
-      <div>ユーザー設定</div >
-      <div>
-      <TextField id="filled-basic" label="newUserName" variant="filled"  value={newUserName} onChange={handleChangeUserName}/>
-      </div>
+      <div style={style_1}>ユーザー設定</div >
 
+<div style={style_2}>ユーザー名；{user_name}</div>
       <div>
           <Button variant="contained" size="medium" 
                   onClick={logOutAction}>
                     ログアウト
-                </Button>
-
-                <Button variant="contained" size="medium" 
-                  onClick={changeNameAction}>
-                    名前変更
                 </Button>
         </div>
       </>
@@ -115,4 +110,13 @@ const style_LoginPage = {
   //background: '#dcdcdc'
 };
 
+const style_1 = {
+ marginBottom:20,
+ fontSize: 30,
+}
+
+const style_2 = {
+  marginBottom:5,
+  fontSize: 20,
+}
 export default UserSettingPage
