@@ -54,6 +54,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const Calendar = () => {
   const user_id = useSelector((state: RootState) => state.login_user_info.id);
+  const select_day_start = useSelector((state: RootState) => state.selected_menu_info.selected_day_start);
 
   const [userEventList, setUserEventList] = useState<Event[]>([] as Event[]);
   const [materialList, setMaterialList] = useState([] as string[]);
@@ -74,6 +75,9 @@ const Calendar = () => {
 
   //API通信を行う箇所
   useEffect(() => {
+    const currentDate = new Date();
+    dispatch(setSelectDayStart(formatDate(currentDate)));
+
       axios(options)
         .then((res: AxiosResponse<Event[]>) => {
           const data: Event[] = res.data;
@@ -95,7 +99,7 @@ const Calendar = () => {
           // エラー処理
           console.log(e.message);
         });
-  });
+  }, []);
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
     setMaterialList([] as string[]);
@@ -197,6 +201,7 @@ const Calendar = () => {
           marginTop: 5,
         }}>
         レシピ選択
+        ({select_day_start})
       </Button>
       <TableContainer component={Paper}>
         <Table sx={{ marginTop: 5}} aria-label="customized table">
