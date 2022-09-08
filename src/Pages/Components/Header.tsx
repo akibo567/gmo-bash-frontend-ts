@@ -24,24 +24,7 @@ const Header = () => {
               href="/"
               sx={{
                 mr: 2,
-                display: { xs: 'none', md: 'none', lg: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: TEXT_COLOR,
-                textDecoration: 'none',
-              }}
-              >
-              自炊Health
-            </Typography>
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex', lg: 'none' },
+                display: { xs: 'none', md: 'flex', lg: 'flex' },
                 fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '.3rem',
@@ -79,24 +62,7 @@ const Header = () => {
                   href="/setting"
                   sx={{
                     mr: 2,
-                    display: { xs: 'none', md: 'none', lg: 'flex' },
-                    fontFamily: 'monospace',
-                    fontWeight: 70,
-                    letterSpacing: '.3rem',
-                    color: TEXT_COLOR,
-                    textDecoration: 'none',
-                  }}
-                  >
-                  {user_id}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="a"
-                  href="/setting"
-                  sx={{
-                    mr: 2,
-                    display: { xs: 'none', md: 'flex', lg: 'none' },
+                    display: { xs: 'none', md: 'flex', lg: 'flex' },
                     fontFamily: 'monospace',
                     fontWeight: 70,
                     letterSpacing: '.3rem',

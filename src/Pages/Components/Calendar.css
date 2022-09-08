@@ -47,3 +47,7 @@ td.fc-day-sun .fc-daygrid-day-number {
 .fc-timegrid-event, .fc-sticky{
   color: black
 }
+
+.fc .fc-toolbar {
+  justify-content: space-around;
+}

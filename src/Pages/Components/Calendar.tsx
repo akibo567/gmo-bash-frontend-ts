@@ -19,8 +19,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
 
-import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME, BREAKFAST_COLOR, LUNCH_COLOR, DINNER_COLOR } from '../../Setting';
+import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME, BREAKFAST_COLOR, LUNCH_COLOR, DINNER_COLOR, TEXT_COLOR } from '../../Setting';
 import { FunctionStringToInt, formatDate } from '../../Helper';
 import { RootState } from '../../store';
 
@@ -29,11 +32,12 @@ import listPlugin from '@fullcalendar/list';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    backgroundColor: DINNER_COLOR,
+    color: TEXT_COLOR, 
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    color: 'black'
   },
 }));
 
@@ -175,6 +179,10 @@ const Calendar = () => {
             left: 'dayGridMonth',
             right: 'listMonth'
           }}
+          buttonText={{
+            month:    'カレンダー',
+            list:     'リスト'
+          }}
           initialView="dayGridMonth" // 初期表示のモードを設定する
           events={userEventList}
           contentHeight='auto'
@@ -197,8 +205,8 @@ const Calendar = () => {
         レシピ選択
       </Button>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700, marginTop: 5}} aria-label="customized table">
-          <TableHead>
+        <Table sx={{ marginTop: 5}} aria-label="customized table">
+          <TableHead sx={{ width: 10 }}>
             <TableRow>
               <StyledTableCell align='center'>食材一覧</StyledTableCell>
             </TableRow>
@@ -208,11 +216,15 @@ const Calendar = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography
-        fontSize={32}
-        sx={{marginTop: 4}}>
-        合計金額  {sumRecipeCost}円
-      </Typography>
+      <Box sx={{ flexGrow: 1, marginY: 20 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h4" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+            合計金額  {sumRecipeCost}円
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </Box>
     </>
   )
 }
