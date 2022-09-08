@@ -75,7 +75,7 @@ const MenuPage = () => {
   }, []);
 
   return (
-    <div style={style_MenuPage}>
+    <div>
       {isLoading?
       //ロード中に表示する画面
       <Box sx={{ display: 'flex' }}>
@@ -92,7 +92,17 @@ const MenuPage = () => {
               </TabList>
             </Box>
                   <TabPanel value="1">
-                  <div style={style_MenuListContainer}>
+                    <Box        sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        p: 1,
+                        m: 1,
+                        backgroundColor: (theme) =>
+                        theme.palette.mode === 'light'
+                          ? theme.palette.grey[200]
+                          : theme.palette.grey[200],
+                        borderRadius: 1,
+                      }}>
                             {menu_list_breakfast?.map((output: Recipe, index: number) => {
                               return <MenuCard
                                 user_id={user_id}
@@ -106,10 +116,21 @@ const MenuPage = () => {
                                 isRecomended={output.recipeCategory==breakfastFavType}
                               />;
                             })}
-                          </div>
+                      </Box>
                   </TabPanel>
                   <TabPanel value="2">
-                  <div style={style_MenuListContainer}>
+                    <Box        sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        p: 1,
+                        m: 1,
+                        bgcolor: 'background.paper',
+                        backgroundColor: (theme) =>
+                        theme.palette.mode === 'light'
+                          ? theme.palette.grey[200]
+                          : theme.palette.grey[200],
+                        borderRadius: 1,
+                      }}>
                             {menu_list_lunch?.map((output: Recipe, index: number) => {
                               return <MenuCard
                                 user_id={user_id}
@@ -123,24 +144,34 @@ const MenuPage = () => {
                                 isRecomended={output.recipeCategory==lunchFavType}
                               />;
                             })}
-                          </div>
+                      </Box>
                     </TabPanel>
                   <TabPanel value="3">
-                  <div style={style_MenuListContainer}>
-                            {menu_list_dinner?.map((output: Recipe, index: number) => {
-                              return <MenuCard
-                                user_id={user_id}
-                                recipe_id={output.recipeId}
-                                menu_name={output.recipeName}
-                                detail_url={output.recipeUrl}
-                                img_url={output.recipeImage}
-                                selected_date={select_day_start+" "+DINNER_TIME}
-                                setIsLoadingEvent={setIsLoading}
-                                navigateChangeEvent={navigateChange}
-                                isRecomended={output.recipeCategory==dinnerFavType}
-                              />;
-                            })}
-                          </div>
+                    <Box        sx={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      p: 1,
+                      m: 1,
+                      backgroundColor: (theme) =>
+                      theme.palette.mode === 'light'
+                        ? theme.palette.grey[200]
+                        : theme.palette.grey[200],
+                      borderRadius: 1,
+                    }}>
+                      {menu_list_dinner?.map((output: Recipe, index: number) => {
+                                  return <MenuCard
+                                    user_id={user_id}
+                                    recipe_id={output.recipeId}
+                                    menu_name={output.recipeName}
+                                    detail_url={output.recipeUrl}
+                                    img_url={output.recipeImage}
+                                    selected_date={select_day_start+" "+DINNER_TIME}
+                                    setIsLoadingEvent={setIsLoading}
+                                    navigateChangeEvent={navigateChange}
+                                    isRecomended={output.recipeCategory==dinnerFavType}
+                                  />;
+                                })}
+                    </Box>
                   </TabPanel>
           </TabContext>
         }
@@ -149,20 +180,21 @@ const MenuPage = () => {
 }
 
 const style_TabPanel = {
-  background: '#dcdcdc'
+  //background: '#dcdcdc'
 };
 
 const style_MenuListContainer: React.CSSProperties = {
-  display: 'flex',
+  /*display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
   justifyContent: 'center',
+  width: '100%',*/
 };
 
 
 const style_MenuPage = {
-  flex: 1,
-  background: '#dcdcdc'
+  /*flex: 1,
+  background: '#dcdcdc'*/
 };
 
 export default MenuPage

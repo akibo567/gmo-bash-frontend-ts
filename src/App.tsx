@@ -8,6 +8,7 @@ import TopPage from './Pages/TopPage';
 import MenuPage from './Pages/MenuPage';
 import LoginPage from './Pages/LoginPage';
 import UserSettingPage from './Pages/UserSettingPage';
+import SignUpPage from './Pages/SignUpPage';
 
 import Header from './Pages/Components/Header';
 
@@ -26,6 +27,7 @@ function App() {
               <Route path="/MenuPage" element={<MenuPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/setting" element={<UserSettingPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
             </Routes>
           </BrowserRouter>   
         </ThemeProvider>   
