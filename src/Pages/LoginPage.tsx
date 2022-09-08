@@ -102,7 +102,7 @@ const LoginPage = () => {
 
             <Button variant="contained" size="medium" 
               onClick={signUpAction}>
-                新規登録{process.env.REACT_APP_API_ENDPOINT}
+                新規登録
             </Button>
       </div>
       </>
