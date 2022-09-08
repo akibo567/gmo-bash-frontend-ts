@@ -25,5 +25,4 @@ jobs:
             source ~/.nvm/nvm.sh
             npm install
             npm run build
-            killall -9 node
-            nohup serve -s build &
+            cp -r ~/gmo-bash-frontend-ts/build /var/www/
