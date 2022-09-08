@@ -1,6 +1,5 @@
-import React from 'react';
 import './App.css';
-import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { ThemeProvider } from '@mui/material';
 import { theme } from './Setting-color';
