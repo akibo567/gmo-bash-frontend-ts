@@ -11,6 +11,8 @@ import { RootState } from '../../store';
 
 const Header = () => {
   const user_id = useSelector((state: RootState) => state.login_user_info.id);
+  const user_name = useSelector((state: RootState) => state.login_user_info.name);
+
 
   return (
     <header>
@@ -87,7 +89,7 @@ const Header = () => {
                     textDecoration: 'none',
                   }}
                   >
-                  {user_id}
+                  {user_name}
                 </Typography>
                 <Typography
                   variant="h6"
@@ -104,7 +106,7 @@ const Header = () => {
                     textDecoration: 'none',
                   }}
                   >
-                  {user_id}
+                  {user_name}
                 </Typography>
                 <Typography
                     variant="h6"
@@ -122,7 +124,7 @@ const Header = () => {
                       textDecoration: 'none',
                     }}
                     >
-                    {user_id}
+                    {user_name}
                 </Typography>
               </div> : ""
             }

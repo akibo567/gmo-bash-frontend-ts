@@ -41,6 +41,7 @@ const UserSettingPage = () => {
   const logOutAction = () =>{
     dispatch(setLoginUserId(0));
     localStorage.removeItem('login_user_id');
+    localStorage.removeItem('login_user_name');
     alert('ログアウトしました。');
     navigate('/login');
   }
@@ -61,24 +62,6 @@ const UserSettingPage = () => {
     });
 
   }
-
-  /*const deleteUserAction = () =>{
-    axios
-    .delete(API_ENDPOINT + "user", {
-      "userName": userName,
-      "userPass": password,
-    })
-    .then((res) => {
-      if(res.data.message == "success"){
-        alert("ユーザー名変更に成功しました");
-      }else{
-        alert("エラー");
-      };
-    }).catch(err => {
-      alert('通信エラー:'+err);
-    });
-
-  }*/
 
   const handleChangeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewUserName(event.target.value);
