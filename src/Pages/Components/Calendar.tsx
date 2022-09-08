@@ -61,8 +61,6 @@ const Calendar = () => {
 
   let sumCost = 0;
 
-  const is_user_login = (user_id > 0);
-
   const options: AxiosRequestConfig = {
     url: `${API_ENDPOINT}/user/recipe`,
     method: "GET",
@@ -76,9 +74,6 @@ const Calendar = () => {
 
   //API通信を行う箇所
   useEffect(() => {
-    if(!(user_id > 0)){
-      navigate('/login');
-    }else{
       axios(options)
         .then((res: AxiosResponse<Event[]>) => {
           const data: Event[] = res.data;
@@ -100,7 +95,6 @@ const Calendar = () => {
           // エラー処理
           console.log(e.message);
         });
-    }
   });
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
