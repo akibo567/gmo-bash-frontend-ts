@@ -9,6 +9,9 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from '../../store';
 
+import SettingsIcon from '@mui/icons-material/Settings';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 const Header = () => {
   const user_id = useSelector((state: RootState) => state.login_user_info.id);
   const user_name = useSelector((state: RootState) => state.login_user_info.name);
@@ -74,6 +77,7 @@ const Header = () => {
                   >
                   {user_name}
                 </Typography>
+                
                 <Typography
                     variant="h6"
                     noWrap
@@ -90,6 +94,13 @@ const Header = () => {
                       textDecoration: 'none',
                     }}
                     >
+                    <AccountCircleIcon
+                      sx={{
+                        marginX: 1,
+                        marginY: 1,
+                      }}
+                    >
+                    </AccountCircleIcon>
                     {user_name}
                 </Typography>
               </div> : ""
