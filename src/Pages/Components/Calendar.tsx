@@ -20,9 +20,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 
-import { API_ENDPOINT, BREAKFAST_TIME, LUNCH_TIME, DINNER_TIME } from '../../Setting';
-import { formatDate } from '../../Helper';
-import {RootState} from '../../store';
+import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME } from '../../Setting';
+import { FunctionStringToInt, formatDate } from '../../Helper';
+import { RootState } from '../../store';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -50,6 +50,9 @@ const Calendar = () => {
 
   const [userEventList, setUserEventList] = useState<Event[]>([] as Event[]);
   const [materialList, setMaterialList] = useState([] as string[]);
+  const [sumRecipeCost, setSumRecipeCost] = useState(0 as number);
+
+  let sumCost = 0;
 
   const is_user_login = (user_id > 0);
 
@@ -72,6 +75,7 @@ const Calendar = () => {
       axios(options)
         .then((res: AxiosResponse<Event[]>) => {
           const data: Event[] = res.data;
+          // dateの表示形式を変更するためにdataをupdateDataに更新する
           const updateData: Event[] = [];
           data.map((event: Event) => {
             const tmp: string = event.date.substring(11);
@@ -94,6 +98,9 @@ const Calendar = () => {
 
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
     setMaterialList([] as string[]);
+    setSumRecipeCost(0 as number);
+    sumCost = 0;
+
     dispatch(setSelectDayStart(selectionInfo.startStr));
 
     const startDate = new Date(selectionInfo.startStr);
@@ -108,6 +115,11 @@ const Calendar = () => {
     dateList.map((date: string) => {
       const eventList = userEventList.filter((event: Event) => event.date === date);
       eventList.map((event) => {
+        // 食費の計算
+        sumCost += FunctionStringToInt(event.recipe.recipeCost);
+        setSumRecipeCost(sumCost);
+
+        // レシピの材料を取得
         const recipeMaterials: string[] = event.recipe.recipeMaterials;
         recipeMaterials.map((material) => {
           if(!materials.includes(material)) {
@@ -119,6 +131,7 @@ const Calendar = () => {
     setMaterialList(materials);
   }
 
+  // レシピの材料を表示
   const displayRecipeMaterial = () => {
     return (
       materialList.map((material: string) => (
@@ -191,7 +204,7 @@ const Calendar = () => {
       <Typography
         fontSize={32}
         sx={{marginTop: 4}}>
-        合計金額  10万円
+        合計金額  {sumRecipeCost}円
       </Typography>
     </>
   )

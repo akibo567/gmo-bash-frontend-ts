@@ -10,9 +10,6 @@ const TopPage = () => {
   return (
     <>
       <Calendar></Calendar>
-      <NavLink to="/MenuPage">
-        <p>メニュー</p>
-      </NavLink>
     </>
   )
 }
