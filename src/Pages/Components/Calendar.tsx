@@ -50,7 +50,9 @@ const Calendar = () => {
 
   const [userEventList, setUserEventList] = useState<Event[]>([] as Event[]);
   const [materialList, setMaterialList] = useState([] as string[]);
-  let [sumRecipeCost, setSumRecipeCost] = useState(0 as number);
+  const [sumRecipeCost, setSumRecipeCost] = useState(0 as number);
+
+  let sumCost = 0;
 
   const is_user_login = (user_id > 0);
 
@@ -97,6 +99,8 @@ const Calendar = () => {
   const handleDateSelect = (selectionInfo: DateSelectArg) => {
     setMaterialList([] as string[]);
     setSumRecipeCost(0 as number);
+    sumCost = 0;
+
     dispatch(setSelectDayStart(selectionInfo.startStr));
 
     const startDate = new Date(selectionInfo.startStr);
@@ -111,8 +115,8 @@ const Calendar = () => {
     dateList.map((date: string) => {
       const eventList = userEventList.filter((event: Event) => event.date === date);
       eventList.map((event) => {
-        sumRecipeCost = sumRecipeCost + FunctionStringToInt(event.recipe.recipeCost);
-        setSumRecipeCost(sumRecipeCost + FunctionStringToInt(event.recipe.recipeCost));
+        sumCost += FunctionStringToInt(event.recipe.recipeCost);
+        setSumRecipeCost(sumCost);
         const recipeMaterials: string[] = event.recipe.recipeMaterials;
         recipeMaterials.map((material) => {
           if(!materials.includes(material)) {
