@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import StarIcon from '@mui/icons-material/Star';
 
 import {API_ENDPOINT} from '../../Setting';
 
@@ -21,6 +22,7 @@ type Props = {
   selected_date: string,
   setIsLoadingEvent: any,
   navigateChangeEvent: any,
+  isRecomended: boolean,
 }
 
 const selectDayMenu = (props: Props) => {
@@ -62,6 +64,7 @@ const MenuCard = (props: Props) => {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div" sx={style_Menu_Name}>
+              {props.isRecomended?<StarIcon/>:""}
             {props.menu_name}
             </Typography>
           </CardContent>

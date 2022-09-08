@@ -30,40 +30,29 @@ import { setLoginUserId } from '../store/loginUserInfo';
 
 
 
-const LoginPage = () => {
+const UserSettingPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [userName, setUserName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const user_id = useSelector((state: RootState) => state.login_user_info.id);
 
-  const loginAction = () =>{
-    axios
-    .get(API_ENDPOINT + "user?userName=" + userName + "&userPass=" + password)
-    .then((res) => {
-      if(res.data.userId > 0){
-        localStorage.setItem('login_user_id', res.data.userId);
-        dispatch(setLoginUserId(res.data.userId));
-        alert("ログイン完了しました。");
-        navigate('/');
-      }else{
-        alert(res.data.message);
-      };
-    }).catch(err => {
-      alert('通信エラー:'+err);
-    });
+  const [newUserName, setNewUserName] = useState<string>("");
 
+  const logOutAction = () =>{
+    dispatch(setLoginUserId(0));
+    localStorage.removeItem('login_user_id');
+    alert('ログアウトしました。');
+    navigate('/login');
   }
 
-  const signUpAction = () =>{
+  const changeNameAction = () =>{
     axios
-    .post(API_ENDPOINT + "user", {
-      "userName": userName,
-      "userPass": password,
+    .patch(API_ENDPOINT + "user", {
+      "userName": newUserName,
     })
     .then((res) => {
       if(res.data.message == "success"){
-        alert("ユーザー作成に成功しました");
+        alert("ユーザー名変更に成功しました");
       }else{
         alert("エラー");
       };
@@ -73,38 +62,54 @@ const LoginPage = () => {
 
   }
 
+  /*const deleteUserAction = () =>{
+    axios
+    .delete(API_ENDPOINT + "user", {
+      "userName": userName,
+      "userPass": password,
+    })
+    .then((res) => {
+      if(res.data.message == "success"){
+        alert("ユーザー名変更に成功しました");
+      }else{
+        alert("エラー");
+      };
+    }).catch(err => {
+      alert('通信エラー:'+err);
+    });
+
+  }*/
+
   const handleChangeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value);
+    setNewUserName(event.target.value);
   };
 
-  const handleChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
   
   useEffect(() => {
-
+    if(!(user_id > 0)){
+      navigate('/login');
+    }
   }, []);
 
   return (
     <div style={style_LoginPage}>
       <>
+      <div>ユーザー設定</div >
       <div>
-      <TextField id="filled-basic" label="userName" variant="filled"  value={userName} onChange={handleChangeUserName}/>
+      <TextField id="filled-basic" label="newUserName" variant="filled"  value={newUserName} onChange={handleChangeUserName}/>
       </div>
-      <div>
-      <TextField id="filled-basic" label="password" variant="filled"  value={password} onChange={handleChangePassword}/>
-      </div>
-      <div>
-      <Button variant="contained" size="medium" 
-              onClick={loginAction}>
-                ログイン
-            </Button>
 
-            <Button variant="contained" size="medium" 
-              onClick={signUpAction}>
-                新規登録
-            </Button>
-      </div>
+      <div>
+          <Button variant="contained" size="medium" 
+                  onClick={logOutAction}>
+                    ログアウト
+                </Button>
+
+                <Button variant="contained" size="medium" 
+                  onClick={changeNameAction}>
+                    名前変更
+                </Button>
+        </div>
       </>
     </div>
   );
@@ -127,4 +132,4 @@ const style_LoginPage = {
   //background: '#dcdcdc'
 };
 
-export default LoginPage
+export default UserSettingPage
