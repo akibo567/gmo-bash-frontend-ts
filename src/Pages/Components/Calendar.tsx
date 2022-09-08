@@ -202,7 +202,7 @@ const Calendar = () => {
         レシピ選択
       </Button>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700, marginTop: 5}} aria-label="customized table">
+        <Table sx={{ marginTop: 5}} aria-label="customized table">
           <TableHead sx={{ width: 10 }}>
             <TableRow>
               <StyledTableCell align='center'>食材一覧</StyledTableCell>
