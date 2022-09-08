@@ -1,4 +1,4 @@
-export const API_ENDPOINT = "https://v163-44-255-248.oox1.static.cnode.io/api/dev/";
+export const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
 export const BREAKFAST_TIME = "09:00:00";
 export const LUNCH_TIME = "12:00:00";
