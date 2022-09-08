@@ -29,6 +29,8 @@ type Props = {
   isRecomended: boolean,
 }
 
+const MAX_MENU_NAME_LENGTH = 24;
+
 const selectDayMenu = (props: Props) => {
   props.setIsLoadingEvent(true);
   axios
@@ -53,6 +55,14 @@ const selectAccessDetail = (props: Props) => {
   
 }
 
+const sliceMenuName = (name: string) =>{
+  if(name.length  >= MAX_MENU_NAME_LENGTH){
+    return name.slice( 0, MAX_MENU_NAME_LENGTH -1 ) + "…";
+  }else{
+    return name;
+  }
+}
+
 /*function selectDetail(e: any) {
   e.preventDefault();
   console.log('You clicked submit.');
@@ -73,7 +83,7 @@ const MenuCard = (props: Props) => {
           <CardContent sx={{ marginY: 0, paddingBottom: 0 }}>
             <Typography gutterBottom variant="h5" component="div" sx={style_Menu_Name}>
               {props.isRecomended?<StarIcon/>:""}
-              {props.menu_name}
+              {sliceMenuName(props.menu_name)}
             </Typography>
             <Typography 
               gutterBottom variant="subtitle1"
