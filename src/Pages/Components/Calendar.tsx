@@ -19,6 +19,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
 
 import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME, BREAKFAST_COLOR, LUNCH_COLOR, DINNER_COLOR, TEXT_COLOR } from '../../Setting';
 import { FunctionStringToInt, formatDate } from '../../Helper';
@@ -213,11 +216,15 @@ const Calendar = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography
-        fontSize={32}
-        sx={{marginTop: 4}}>
-        合計金額  {sumRecipeCost}円
-      </Typography>
+      <Box sx={{ flexGrow: 1, marginY: 20 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h4" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+            合計金額  {sumRecipeCost}円
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    </Box>
     </>
   )
 }
