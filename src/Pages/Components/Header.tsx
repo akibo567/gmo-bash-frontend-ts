@@ -11,6 +11,8 @@ import { RootState } from '../../store';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import zisui from './zisui.png' 
+import { width } from '@mui/system';
 
 const Header = () => {
   const user_id = useSelector((state: RootState) => state.login_user_info.id);
@@ -19,9 +21,11 @@ const Header = () => {
 
   return (
     <header>
+      
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <img src={zisui} style={{width: 32, marginRight: 8}}/>
             <Typography
               variant="h6"
               noWrap
