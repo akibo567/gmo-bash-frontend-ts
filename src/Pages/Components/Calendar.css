@@ -1,0 +1,72 @@
+.fc .fc-toolbar.fc-header-toolbar {
+  margin-bottom: 0px;
+}
+
+th.fc-day-sat .fc-col-header-cell-cushion {
+  color: blue;
+}
+th.fc-day-sun .fc-col-header-cell-cushion{
+  color: red;
+}
+.fc-col-header-cell-cushion {
+  color: black;
+}
+.fc-daygrid-day-number {
+  color: black;
+}
+td.fc-day-sat .fc-daygrid-day-number {
+  color: blue;
+}
+td.fc-day-sun .fc-daygrid-day-number {
+  color: red;
+}
+
+.fc-header-toolbar{
+  background-color: black;
+  padding-top: 32px;
+  padding-bottom: 8px;
+}
+.fc-toolbar-title{
+  color: white;
+}
+
+.fc-next-button.btn.btn-primary, 
+.fc-prev-button.btn.btn-primary,
+.fc-listMonth-button.btn.btn-primary,
+.fc-dayGridMonth-button.btn.btn-primary,
+.fc-timeGridWeek-button.btn.btn-primary{
+  background-color: pink;
+  border-color: pink;
+}
+
+.fc-next-button.btn.btn-primary{
+  margin-right: 40px;
+}
+
+.fc-prev-button.btn.btn-primary{
+  margin-left: 40px;
+}
+
+
+.fc-daygrid-event.events, .fc-timegrid-event.events{
+  background-color: pink;
+  color: black;
+  font-size: 10px;
+  border: 0;
+}
+
+.fc-daygrid-event.bring_items, .fc-timegrid-event.bring_items{
+  background-color: #FEF3AF;
+  color: black;
+  font-size: 10px;
+  border: 0;
+}
+
+.fc-listMonth-button.btn.btn-primary{
+  margin-right: 8px;
+}
+
+.fc-dayGridMonth-button.btn.btn-primary{
+  margin-left: 8px;
+  
+}

@@ -24,6 +24,8 @@ import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME } from '../../Setting';
 import { FunctionStringToInt, formatDate } from '../../Helper';
 import { RootState } from '../../store';
 
+import "./Calendar.css";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
