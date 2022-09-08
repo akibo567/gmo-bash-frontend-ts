@@ -34,7 +34,7 @@ import {API_ENDPOINT,
    DINNER_MENU_TYPES,
 } from '../Setting';
 import { AnyIfEmpty } from "react-redux";
-import { setLoginUserId } from '../store/loginUserInfo';
+import { setLoginUserId, setLoginUserName} from '../store/loginUserInfo';
 
 
 
@@ -51,7 +51,9 @@ const LoginPage = () => {
      .then((res) => {
        if(res.data.userId > 0){
          localStorage.setItem('login_user_id', res.data.userId);
+         localStorage.setItem('login_user_name', res.data.userName.toString());
          dispatch(setLoginUserId(res.data.userId));
+         dispatch(setLoginUserName(res.data.userName.toString()));
          alert("ログイン完了しました。");
          navigate('/');
        }else{
@@ -73,7 +75,6 @@ const LoginPage = () => {
   return (
 
       <div>
-        <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
@@ -129,7 +130,6 @@ const LoginPage = () => {
             </Box>
           </Box>
         </Container>
-        </ThemeProvider>
       </div>
   );
 }

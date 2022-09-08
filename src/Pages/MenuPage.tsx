@@ -104,17 +104,20 @@ const MenuPage = () => {
                         borderRadius: 1,
                       }}>
                             {menu_list_breakfast?.map((output: Recipe, index: number) => {
-                              return <MenuCard
+                              return <Box sx={{
+                                p: 1,
+                                m: 1,}}><MenuCard
                                 user_id={user_id}
                                 recipe_id={output.recipeId}
                                 menu_name={output.recipeName}
                                 img_url={output.recipeImage}
                                 detail_url={output.recipeUrl}
+                                menu_time={output.recipeIndication}
                                 selected_date={select_day_start+" "+BREAKFAST_TIME}
                                 setIsLoadingEvent={setIsLoading}
                                 navigateChangeEvent={navigateChange}
                                 isRecomended={output.recipeCategory==breakfastFavType}
-                              />;
+                              /></Box>;
                             })}
                       </Box>
                   </TabPanel>
@@ -132,17 +135,20 @@ const MenuPage = () => {
                         borderRadius: 1,
                       }}>
                             {menu_list_lunch?.map((output: Recipe, index: number) => {
-                              return <MenuCard
+                              return <Box sx={{
+                                p: 1,
+                                m: 1,}}><MenuCard
                                 user_id={user_id}
                                 recipe_id={output.recipeId}
                                 menu_name={output.recipeName}
                                 detail_url={output.recipeUrl}
                                 img_url={output.recipeImage}
+                                menu_time={output.recipeIndication}
                                 selected_date={select_day_start+" "+LUNCH_TIME}
                                 setIsLoadingEvent={setIsLoading}
                                 navigateChangeEvent={navigateChange}
                                 isRecomended={output.recipeCategory==lunchFavType}
-                              />;
+                              /></Box>;
                             })}
                       </Box>
                     </TabPanel>
@@ -159,17 +165,20 @@ const MenuPage = () => {
                       borderRadius: 1,
                     }}>
                       {menu_list_dinner?.map((output: Recipe, index: number) => {
-                                  return <MenuCard
+                                  return <Box sx={{
+                                    p: 1,
+                                    m: 1,}}><MenuCard
                                     user_id={user_id}
                                     recipe_id={output.recipeId}
                                     menu_name={output.recipeName}
                                     detail_url={output.recipeUrl}
                                     img_url={output.recipeImage}
+                                    menu_time={output.recipeIndication}
                                     selected_date={select_day_start+" "+DINNER_TIME}
                                     setIsLoadingEvent={setIsLoading}
                                     navigateChangeEvent={navigateChange}
                                     isRecomended={output.recipeCategory==dinnerFavType}
-                                  />;
+                                  /></Box>;
                                 })}
                     </Box>
                   </TabPanel>

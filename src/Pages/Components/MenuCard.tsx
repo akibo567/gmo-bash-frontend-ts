@@ -6,8 +6,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import StarIcon from '@mui/icons-material/Star';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 
 import {API_ENDPOINT} from '../../Setting';
 
@@ -19,6 +21,7 @@ type Props = {
   menu_name: string,
   detail_url: string,
   img_url: string,
+  menu_time: string,
   selected_date: string,
   setIsLoadingEvent: any,
   navigateChangeEvent: any,
@@ -45,6 +48,10 @@ const selectDayMenu = (props: Props) => {
   });
 }
 
+const selectAccessDetail = (props: Props) => {
+  
+}
+
 /*function selectDetail(e: any) {
   e.preventDefault();
   console.log('You clicked submit.');
@@ -65,18 +72,32 @@ const MenuCard = (props: Props) => {
           <CardContent>
             <Typography gutterBottom variant="h5" component="div" sx={style_Menu_Name}>
               {props.isRecomended?<StarIcon/>:""}
-            {props.menu_name}
+              {props.menu_name}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div" sx={style_Menu_Name}>
+              <AccessTimeFilledIcon/>
+              {props.menu_time}
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="contained" size="medium" 
-              onClick={() => selectDayMenu(props)}>
-                追加
-            </Button>
+            <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              p: 1,
+              m: 1,
+              borderRadius: 1,
+            }}
+            >
+              <Button variant="contained" size="medium" 
+                onClick={() => selectDayMenu(props)}>
+                  追加
+              </Button>
 
-            <a target="_blank" href={props.detail_url}>
-              <Button variant="outlined"size="medium">詳細</Button>
-            </a>
+              <a target="_blank" href={props.detail_url}>
+                <Button variant="outlined"size="medium">詳細</Button>
+              </a>
+            </Box>
           </CardActions>
         </Card>
       </div>
@@ -91,9 +112,9 @@ const MenuCard = (props: Props) => {
 const style_Menucard = {
   background: '#ffffff',
   width : '300px',
-  height : '300px',
-  marginBottom : '10px',
-  marginRight : '20px',
+  height : '350px',
+  //marginBottom : '10px',
+  //marginRight : '20px',
   padding : '10px',
 };
 

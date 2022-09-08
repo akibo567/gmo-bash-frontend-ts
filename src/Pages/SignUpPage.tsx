@@ -75,7 +75,6 @@ const LoginPage = () => {
   return (
 
           <div>
-            <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                   <CssBaseline />
                   <Box
@@ -130,7 +129,6 @@ const LoginPage = () => {
                     </Box>
                   </Box>
                 </Container>
-              </ThemeProvider>
           </div>
   );
 }
