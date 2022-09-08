@@ -97,7 +97,10 @@ const MenuPage = () => {
                         flexWrap: 'wrap',
                         p: 1,
                         m: 1,
-                        bgcolor: 'background.paper',
+                        backgroundColor: (theme) =>
+                        theme.palette.mode === 'light'
+                          ? theme.palette.grey[200]
+                          : theme.palette.grey[200],
                         borderRadius: 1,
                       }}>
                             {menu_list_breakfast?.map((output: Recipe, index: number) => {
@@ -122,6 +125,10 @@ const MenuPage = () => {
                         p: 1,
                         m: 1,
                         bgcolor: 'background.paper',
+                        backgroundColor: (theme) =>
+                        theme.palette.mode === 'light'
+                          ? theme.palette.grey[200]
+                          : theme.palette.grey[200],
                         borderRadius: 1,
                       }}>
                             {menu_list_lunch?.map((output: Recipe, index: number) => {
@@ -145,7 +152,10 @@ const MenuPage = () => {
                       flexWrap: 'wrap',
                       p: 1,
                       m: 1,
-                      bgcolor: 'palette.grey[500]',
+                      backgroundColor: (theme) =>
+                      theme.palette.mode === 'light'
+                        ? theme.palette.grey[200]
+                        : theme.palette.grey[200],
                       borderRadius: 1,
                     }}>
                       {menu_list_dinner?.map((output: Recipe, index: number) => {
