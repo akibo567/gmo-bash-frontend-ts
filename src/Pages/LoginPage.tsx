@@ -45,7 +45,7 @@ const LoginPage = () => {
         localStorage.setItem('login_user_id', res.data.userId);
         dispatch(setLoginUserId(res.data.userId));
         alert("ログイン完了しました。");
-        navigate('/');
+        //navigate('/');
       }else{
         alert(res.data.message);
       };
@@ -102,7 +102,7 @@ const LoginPage = () => {
 
             <Button variant="contained" size="medium" 
               onClick={signUpAction}>
-                新規登録
+                新規登録{process.env.REACT_APP_API_ENDPOINT}
             </Button>
       </div>
       </>
