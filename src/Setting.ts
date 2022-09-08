@@ -12,3 +12,5 @@ export const DINNER_MENU_TYPES = ['38-503','11-76','10'];
 export const BREAKFAST_COLOR = "#ADCF9F";
 export const LUNCH_COLOR = "#CED89E";
 export const DINNER_COLOR = "#FFDCAE";
+
+export const TEXT_COLOR = "rgb(36, 36, 36)";
