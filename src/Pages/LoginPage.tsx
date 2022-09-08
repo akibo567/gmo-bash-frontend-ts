@@ -45,7 +45,7 @@ const LoginPage = () => {
         localStorage.setItem('login_user_id', res.data.userId);
         dispatch(setLoginUserId(res.data.userId));
         alert("ログイン完了しました。");
-        //navigate('/');
+        navigate('/');
       }else{
         alert(res.data.message);
       };
