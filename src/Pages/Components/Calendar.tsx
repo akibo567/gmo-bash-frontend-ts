@@ -168,6 +168,7 @@ const Calendar = () => {
       <div>
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, listPlugin]} 
+          eventOrder='color'
           headerToolbar={{
             left: 'prev',
             center: 'title',
