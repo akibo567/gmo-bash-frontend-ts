@@ -26,4 +26,4 @@ jobs:
             npm install
             npm run build
             killall -9 node
-            serve -s build
+            serve -s build &
