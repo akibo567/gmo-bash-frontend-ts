@@ -20,9 +20,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 
-import { API_ENDPOINT, BREAKFAST_TIME, LUNCH_TIME, DINNER_TIME } from '../../Setting';
+import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME } from '../../Setting';
 import { FunctionStringToInt, formatDate } from '../../Helper';
-import {RootState} from '../../store';
+import { RootState } from '../../store';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -115,8 +115,11 @@ const Calendar = () => {
     dateList.map((date: string) => {
       const eventList = userEventList.filter((event: Event) => event.date === date);
       eventList.map((event) => {
+        // 食費の計算
         sumCost += FunctionStringToInt(event.recipe.recipeCost);
         setSumRecipeCost(sumCost);
+
+        // レシピの材料を取得
         const recipeMaterials: string[] = event.recipe.recipeMaterials;
         recipeMaterials.map((material) => {
           if(!materials.includes(material)) {
@@ -128,6 +131,7 @@ const Calendar = () => {
     setMaterialList(materials);
   }
 
+  // レシピの材料を表示
   const displayRecipeMaterial = () => {
     return (
       materialList.map((material: string) => (
