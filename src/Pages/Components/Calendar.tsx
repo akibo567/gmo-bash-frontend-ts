@@ -20,7 +20,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 
-import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME, BREAKFAST_COLOR, LUNCH_COLOR, DINNER_COLOR } from '../../Setting';
+import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME, BREAKFAST_COLOR, LUNCH_COLOR, DINNER_COLOR, TEXT_COLOR } from '../../Setting';
 import { FunctionStringToInt, formatDate } from '../../Helper';
 import { RootState } from '../../store';
 
@@ -29,11 +29,12 @@ import listPlugin from '@fullcalendar/list';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    backgroundColor: DINNER_COLOR,
+    color: TEXT_COLOR, 
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    color: 'black'
   },
 }));
 
@@ -202,7 +203,7 @@ const Calendar = () => {
       </Button>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700, marginTop: 5}} aria-label="customized table">
-          <TableHead>
+          <TableHead sx={{ width: 10 }}>
             <TableRow>
               <StyledTableCell align='center'>食材一覧</StyledTableCell>
             </TableRow>
