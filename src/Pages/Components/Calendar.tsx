@@ -25,6 +25,7 @@ import { FunctionStringToInt, formatDate } from '../../Helper';
 import { RootState } from '../../store';
 
 import "./Calendar.css";
+import listPlugin from '@fullcalendar/list';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -164,11 +165,15 @@ const Calendar = () => {
     <>
       <div>
         <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]} 
+          plugins={[dayGridPlugin, interactionPlugin, listPlugin]} 
           headerToolbar={{
             left: 'prev',
             center: 'title',
-            right: 'next', 
+            right: 'next'
+          }}
+          footerToolbar={{
+            left: 'dayGridMonth',
+            right: 'listMonth'
           }}
           initialView="dayGridMonth" // 初期表示のモードを設定する
           events={userEventList}
