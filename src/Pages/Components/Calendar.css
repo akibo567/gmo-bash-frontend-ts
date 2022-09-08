@@ -22,12 +22,12 @@ td.fc-day-sun .fc-daygrid-day-number {
 }
 
 .fc-header-toolbar{
-  background-color: green;
+  background-color: white;
   padding-top: 32px;
   padding-bottom: 8px;
 }
 .fc-toolbar-title{
-  color: white;
+  color: rgb(36, 36, 36);
 }
 
 .fc-listMonth-button.btn.btn-primary{

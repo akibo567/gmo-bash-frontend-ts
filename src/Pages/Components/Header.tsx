@@ -2,9 +2,8 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { ThemeProvider } from '@mui/material';
 
-import { theme } from '../../Setting-color';
+import { TEXT_COLOR } from '../../Setting';
 
 import { useSelector } from 'react-redux';
 
@@ -29,7 +28,7 @@ const Header = () => {
                 fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '.3rem',
-                color: 'inherit',
+                color: TEXT_COLOR,
                 textDecoration: 'none',
               }}
               >
@@ -46,7 +45,7 @@ const Header = () => {
                 fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '.3rem',
-                color: 'inherit',
+                color: TEXT_COLOR,
                 textDecoration: 'none',
               }}
               >
@@ -64,7 +63,7 @@ const Header = () => {
                   fontFamily: 'monospace',
                   fontWeight: 700,
                   letterSpacing: '.3rem',
-                  color: 'inherit',
+                  color: TEXT_COLOR,
                   textDecoration: 'none',
                 }}
                 >
@@ -84,7 +83,7 @@ const Header = () => {
                     fontFamily: 'monospace',
                     fontWeight: 70,
                     letterSpacing: '.3rem',
-                    color: 'inherit',
+                    color: TEXT_COLOR,
                     textDecoration: 'none',
                   }}
                   >
@@ -101,7 +100,7 @@ const Header = () => {
                     fontFamily: 'monospace',
                     fontWeight: 70,
                     letterSpacing: '.3rem',
-                    color: 'inherit',
+                    color: TEXT_COLOR,
                     textDecoration: 'none',
                   }}
                   >
@@ -119,7 +118,7 @@ const Header = () => {
                       fontFamily: 'monospace',
                       fontWeight: 70,
                       letterSpacing: '.3rem',
-                      color: 'inherit',
+                      color: TEXT_COLOR,
                       textDecoration: 'none',
                     }}
                     >

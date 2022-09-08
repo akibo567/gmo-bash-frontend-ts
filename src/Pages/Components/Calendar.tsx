@@ -20,7 +20,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 
-import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME } from '../../Setting';
+import { API_ENDPOINT, BREAKFAST_TIME, DINNER_TIME, BREAKFAST_COLOR, LUNCH_COLOR, DINNER_COLOR } from '../../Setting';
 import { FunctionStringToInt, formatDate } from '../../Helper';
 import { RootState } from '../../store';
 
@@ -85,7 +85,7 @@ const Calendar = () => {
             const updateEvent: Event = {
               title: event.title,
               date: event.date.slice(0, event.date.indexOf(" ")),
-              color: (tmp === BREAKFAST_TIME) ? '#ADCF9F' : ((tmp === DINNER_TIME) ? '#CED89E' : '#FFDCAE'),
+              color: (tmp === BREAKFAST_TIME) ? BREAKFAST_COLOR : ((tmp === DINNER_TIME) ? DINNER_COLOR : LUNCH_COLOR),
               recipe: event.recipe
             }
             updateData.push(updateEvent);
