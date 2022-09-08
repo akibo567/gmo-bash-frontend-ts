@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 import axios from 'axios';
 
 import Card from '@mui/material/Card';
@@ -65,38 +66,48 @@ const MenuCard = (props: Props) => {
           <Card sx={style_Menucard}>
           <CardMedia
             component="img"
-            height="140"
+            height="180"
             image={props.img_url}
             alt={props.menu_name}
           />
-          <CardContent>
+          <CardContent sx={{ marginY: 0, paddingBottom: 0 }}>
             <Typography gutterBottom variant="h5" component="div" sx={style_Menu_Name}>
               {props.isRecomended?<StarIcon/>:""}
               {props.menu_name}
             </Typography>
-            <Typography gutterBottom variant="h6" component="div" sx={style_Menu_Name}>
+            <Typography 
+              gutterBottom variant="subtitle1"
+              component="div"
+              sx={{ 
+                display: 'flex', 
+                justifyContent: 'flex-end',
+              }}>
               <AccessTimeFilledIcon/>
-              {props.menu_time}
+              調理時間：{props.menu_time}
             </Typography>
           </CardContent>
           <CardActions>
             <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-evenly',
-              p: 1,
-              m: 1,
-              borderRadius: 1,
-            }}
+              sx={{
+                borderRadius: 1,
+              }}
             >
-              <Button variant="contained" size="medium" 
-                onClick={() => selectDayMenu(props)}>
+              <Button
+                variant="contained"
+                size="medium" 
+                sx={{ marginLeft: 4.5, marginRight: 5}}
+                onClick={() => selectDayMenu(props)}
+              >
                   追加
               </Button>
-
-              <a target="_blank" href={props.detail_url}>
-                <Button variant="outlined"size="medium">詳細</Button>
-              </a>
+              <Button 
+                variant="outlined"
+                size="medium"
+                sx={{ marginLeft: 4, marginRight: 4.5}}
+                href={props.detail_url}
+              >
+                  詳細
+              </Button>
             </Box>
           </CardActions>
         </Card>
