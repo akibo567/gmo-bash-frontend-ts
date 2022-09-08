@@ -85,7 +85,7 @@ const Calendar = () => {
             const updateEvent: Event = {
               title: event.title,
               date: event.date.slice(0, event.date.indexOf(" ")),
-              color: (tmp === BREAKFAST_TIME) ? 'blue' : ((tmp === DINNER_TIME) ? 'red' : 'green'),
+              color: (tmp === BREAKFAST_TIME) ? '#ADCF9F' : ((tmp === DINNER_TIME) ? '#CED89E' : '#FFDCAE'),
               recipe: event.recipe
             }
             updateData.push(updateEvent);
