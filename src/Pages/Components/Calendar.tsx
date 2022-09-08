@@ -20,7 +20,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from '@mui/material';
 
-import { API_ENDPOINT } from '../../Setting';
+import { API_ENDPOINT, BREAKFAST_TIME, LUNCH_TIME, DINNER_TIME } from '../../Setting';
 import { formatDate } from '../../Helper';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -65,10 +65,11 @@ const Calendar = () => {
         const data: Event[] = res.data;
         const updateData: Event[] = [];
         data.map((event: Event) => {
+          const tmp: string = event.date.substring(11);
           const updateEvent: Event = {
             title: event.title,
             date: event.date.slice(0, event.date.indexOf(" ")),
-            color: event.color,
+            color: (tmp === BREAKFAST_TIME) ? 'blue' : ((tmp === DINNER_TIME) ? 'red' : 'black'),
             recipe: event.recipe
           }
           updateData.push(updateEvent);
