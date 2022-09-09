@@ -115,6 +115,7 @@ const MenuCard = (props: Props) => {
                 size="medium"
                 sx={{ marginLeft: 4, marginRight: 4.5}}
                 href={props.detail_url}
+                target="_blank"
               >
                   詳細
               </Button>
