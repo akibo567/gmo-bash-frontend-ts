@@ -96,7 +96,7 @@ const MenuPage = () => {
             </Box>
                   <TabPanel value="1">
                     <Box        sx={{
-                        display: 'flex',
+                        display: { xs: 'none', md: 'flex', lg: 'flex' },
                         flexWrap: 'wrap',
                         p: 1,
                         m: 1,
@@ -118,10 +118,35 @@ const MenuPage = () => {
                               /></Box>;
                             })}
                       </Box>
+                    <Box        sx={{
+                        display: { xs: 'flex', md: 'none', lg: 'none' },
+                        flexWrap: 'wrap',
+                        paddingTop: 2,
+                        paddingBottom: 2,
+                        paddingLeft: 0,
+                        paddingRight: 1.25,
+                        backgroundColor: BREAKFAST_COLOR,
+                      }}>
+                            {menu_list_breakfast?.map((output: Recipe, index: number) => {
+                              return <Box sx={{ marginY: 1, marginLeft: 0.5, marginRight: 1 }}>
+                                <MenuCard
+                                user_id={user_id}
+                                recipe_id={output.recipeId}
+                                menu_name={output.recipeName}
+                                img_url={output.recipeImage}
+                                detail_url={output.recipeUrl}
+                                menu_time={output.recipeIndication}
+                                selected_date={select_day_start+" "+BREAKFAST_TIME}
+                                setIsLoadingEvent={setIsLoading}
+                                navigateChangeEvent={navigateChange}
+                                isRecomended={output.recipeCategory==breakfastFavType}
+                              /></Box>;
+                            })}
+                      </Box>
                   </TabPanel>
                   <TabPanel value="2">
                     <Box        sx={{
-                        display: 'flex',
+                        display: { xs: 'none', md: 'flex', lg: 'flex' },
                         flexWrap: 'wrap',
                         p: 1,
                         m: 1,
@@ -144,10 +169,37 @@ const MenuPage = () => {
                               /></Box>;
                             })}
                       </Box>
+                    <Box        sx={{
+                        display: { xs: 'flex', md: 'none', lg: 'none' },
+                        flexWrap: 'wrap',
+                        paddingTop: 2,
+                        paddingBottom: 2,
+                        paddingLeft: 0,
+                        paddingRight: 0.5,
+                        bgcolor: 'background.paper',
+                        backgroundColor: LUNCH_COLOR,
+                      }}>
+                            {menu_list_lunch?.map((output: Recipe, index: number) => {
+                              return <Box sx={{
+                                marginY: 1, marginLeft: 0.5, marginRight: 1}}>
+                                <MenuCard
+                                user_id={user_id}
+                                recipe_id={output.recipeId}
+                                menu_name={output.recipeName}
+                                detail_url={output.recipeUrl}
+                                img_url={output.recipeImage}
+                                menu_time={output.recipeIndication}
+                                selected_date={select_day_start+" "+LUNCH_TIME}
+                                setIsLoadingEvent={setIsLoading}
+                                navigateChangeEvent={navigateChange}
+                                isRecomended={output.recipeCategory==lunchFavType}
+                              /></Box>;
+                            })}
+                      </Box>
                     </TabPanel>
                   <TabPanel value="3">
                     <Box        sx={{
-                      display: 'flex',
+                      display: { xs: 'none', md: 'flex', lg: 'flex' },
                       flexWrap: 'wrap',
                       p: 1,
                       m: 1,
@@ -156,6 +208,32 @@ const MenuPage = () => {
                       {menu_list_dinner?.map((output: Recipe, index: number) => {
                                   return <Box sx={{
                                     m: 1,}}><MenuCard
+                                    user_id={user_id}
+                                    recipe_id={output.recipeId}
+                                    menu_name={output.recipeName}
+                                    detail_url={output.recipeUrl}
+                                    img_url={output.recipeImage}
+                                    menu_time={output.recipeIndication}
+                                    selected_date={select_day_start+" "+DINNER_TIME}
+                                    setIsLoadingEvent={setIsLoading}
+                                    navigateChangeEvent={navigateChange}
+                                    isRecomended={output.recipeCategory==dinnerFavType}
+                                  /></Box>;
+                                })}
+                    </Box>
+                    <Box        sx={{
+                      display: { xs: 'flex', md: 'none', lg: 'none' },
+                      flexWrap: 'wrap',
+                      paddingTop: 2,
+                      paddingBottom: 2,
+                      paddingLeft: 0,
+                      paddingRight: 0.5,
+                      backgroundColor: DINNER_COLOR,
+                    }}>
+                      {menu_list_dinner?.map((output: Recipe, index: number) => {
+                                  return <Box sx={{
+                                    marginY: 1, marginLeft: 0.5, marginRight: 1}}>
+                                    <MenuCard
                                     user_id={user_id}
                                     recipe_id={output.recipeId}
                                     menu_name={output.recipeName}
